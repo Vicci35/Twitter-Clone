@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 20px auto;
+  font-style: oblique;
+  color: darkblue;
+}
+
+p {
+  font-style: italic;
+  color: blue;
+}
