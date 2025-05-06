@@ -7,7 +7,7 @@ const Homepage = () => {
         <h2>Home</h2>
         <textarea
             type="text"
-            placeholder="Yooo mama"
+            placeholder="Yooo"
         ></textarea>
         </div>
         </>
