@@ -1,12 +1,13 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <h1>Twitter clone</h1>
-
-      <p>Oliver, VT, Viccan, Seb</p>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LogIn />} />
+      </Routes>
+    </Router>
   );
 }
 
