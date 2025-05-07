@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
   return (
@@ -10,6 +11,8 @@ const LogIn = () => {
           placeholder="Mobil, e-postadress eller användarnamn"
         ></input>
       </div>
+
+      <Link to={"/sign-up"}>Inget konto? Skapa ett här:</Link>
     </>
   );
 };
