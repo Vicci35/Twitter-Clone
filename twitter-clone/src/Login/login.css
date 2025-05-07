@@ -6,16 +6,21 @@ input {
 button {
   border-radius: 12px;
   padding: 5px 0 5px 0;
+  width: 300px;
 }
 
 .next {
   background-color: black;
   color: white;
-
-  width: 50%;
+  border-style: none;
 }
 
 .forgot-password {
   background-color: white;
-  width: 50%;
+}
+
+.LoggaIn {
+  background-color: gray;
+  border-style: none;
+  color: white;
 }
