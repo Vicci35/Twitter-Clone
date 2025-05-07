@@ -9,6 +9,13 @@ const LogInStep2 = () => {
       <form id="login-form">
         <div className="Login2-container">
           <input type="text" placeholder="E-post" />
+          <br />
+          <br />
+          <input type="text" placeholder="Lösenord" />
+          <br />
+          <h6>
+            <a href="#">Har du glömt lösenord?</a>
+          </h6>
         </div>
       </form>
     </div>
