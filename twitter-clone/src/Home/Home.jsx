@@ -26,6 +26,7 @@ export default function HomeFeed() {
   return (
     <div className="app-container">
       <div className="main-feed">
+      <h1>Home</h1>
         <div className="tweet-box">
           <textarea
             placeholder="What's happening?"
