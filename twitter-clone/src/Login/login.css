@@ -1,0 +1,26 @@
+input {
+  width: 200px;
+  padding: 5px 0 5px 0;
+}
+
+button {
+  border-radius: 12px;
+  padding: 5px 0 5px 0;
+  width: 300px;
+}
+
+.next {
+  background-color: black;
+  color: white;
+  border-style: none;
+}
+
+.forgot-password {
+  background-color: white;
+}
+
+.LoggaIn {
+  background-color: gray;
+  border-style: none;
+  color: white;
+}
