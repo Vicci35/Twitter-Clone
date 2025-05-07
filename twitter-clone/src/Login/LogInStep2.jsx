@@ -14,8 +14,13 @@ const LogInStep2 = () => {
           <input type="text" placeholder="Lösenord" />
           <br />
           <h6>
-            <a href="#">Har du glömt lösenord?</a>
+            <a className="forgot-password-tag" href="#">
+              Har du glömt lösenord?
+            </a>
           </h6>
+          <br />
+          <br />
+          <button className="LoggaIn">Logga in</button>
         </div>
       </form>
     </div>
