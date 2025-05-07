@@ -6,16 +6,21 @@ const LogIn = () => {
     <>
       <div>
         <h1>Logga in på Twitter</h1>
-        <input
-          type="text"
-          placeholder="Mobil, e-postadress eller användarnamn"
-        ></input>
-        <br />
-        <br />
-        <button class="next">Nästa</button>
-        <br />
-        <br />
-        <button class="forgot-password">Har du glömt lösenord?</button>
+        <form className="step1-form">
+          <div className="step1-container">
+            <input
+              type="text"
+              placeholder="Mobil, e-postadress eller användarnamn"
+            ></input>
+            <br />
+            <br />
+            <button class="next">Nästa</button>
+            <br />
+            <br />
+            <button class="forgot-password">Har du glömt lösenord?</button>
+          </div>
+        </form>
+
         <br />
         <br />
         <h6>
