@@ -18,6 +18,12 @@ label {
   text-align: center;
 }
 
+#wrong-pass {
+  /* height: 20px; */
+  margin: 10px auto;
+  color: red;
+}
+
 #saveUser {
   display: block;
   margin: 10px auto;

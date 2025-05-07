@@ -21,19 +21,23 @@ function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const errorMsg = document.getElementById("wrong-pass");
 
     // Check phone number and passwords
     if (!validatePhone(user.phone)) {
       console.log("Ogiltigt telefonnummer");
+      errorMsg.textContent = "Ogiltigt telefonnummer";
       return;
     }
 
     if (!passwordMatch(user.password, user.repeatPassword)) {
       console.log("Lösenorden måste matcha!");
+      errorMsg.textContent = "Lösenorden måste matcha!";
       return;
     }
 
     console.log(user);
+    errorMsg.textContent = "";
     saveNewUser(user);
   }
 
@@ -95,6 +99,8 @@ function SignUp() {
           placeholder="Repetera lösenord"
           onChange={handleInput}
         />
+
+        <p id="wrong-pass"></p>
 
         <input type="submit" value="Spara" id="saveUser" />
       </form>
