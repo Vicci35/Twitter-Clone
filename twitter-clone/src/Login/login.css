@@ -1,3 +1,15 @@
 button {
-  padding-left: 50px;
+  border-radius: 12px;
+}
+
+.next {
+  background-color: black;
+  color: white;
+
+  width: 50%;
+}
+
+.forgot-password {
+  background-color: white;
+  width: 50%;
 }
