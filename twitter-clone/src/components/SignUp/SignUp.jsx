@@ -91,7 +91,7 @@ function SignUp() {
           onChange={handleInput}
         />
 
-        <label htmlFor="repeatPassword">Lösenord:</label>
+        <label htmlFor="repeatPassword">Repetera lösenord:</label>
         <input
           className="signupInput"
           type="password"
