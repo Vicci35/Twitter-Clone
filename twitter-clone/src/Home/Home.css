@@ -9,6 +9,12 @@
     margin-right: 2rem;
   }
 
+  h1 {
+    text-align: start;
+    color: black;
+    font-style: normal;
+  }
+
   .tweet-box {
     background: #f0f2f5;
     padding: 1rem;
@@ -16,11 +22,7 @@
     margin-bottom: 1rem;
   }
 
-  h1 {
-    text-align: start;
-    color: black;
-    font-style: normal;
-  }
+
 
   textarea {
     width: 100%;
@@ -28,6 +30,7 @@
     border: none;
     border-radius: 4px;
     padding: 0.5rem;
+    padding-right: 0.1px;
     resize: none;
     font-size: 14px;
   }
