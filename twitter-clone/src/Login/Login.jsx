@@ -16,6 +16,11 @@ const LogIn = () => {
         <br />
         <br />
         <button class="forgot-password">Har du glömt lösenord?</button>
+        <br />
+        <br />
+        <h6>
+          Har du inget konto? <a href="#"> Registrera dig</a>
+        </h6>
       </div>
     </>
   );
