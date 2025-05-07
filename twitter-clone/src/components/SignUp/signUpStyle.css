@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+#signUpForm h1 {
+  font-style: normal;
+}
+
 label {
   display: block;
   margin-top: 10px;
