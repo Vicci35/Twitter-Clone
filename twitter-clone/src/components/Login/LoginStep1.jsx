@@ -27,9 +27,6 @@ const LogIn = () => {
             </button>
             <br />
             <br />
-            <button type="button" className="forgot-password">
-              Har du glömt lösenord?
-            </button>
           </div>
         </form>
 
