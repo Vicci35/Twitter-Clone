@@ -11,26 +11,6 @@ function renderWithRouter(ui) {
 }
 
 describe("SignUp", () => {
-  test("should display error message for invalid phone number", () => {
-    renderWithRouter(<SignUp />);
-
-    fireEvent.change(screen.getByLabelText(/telefon/i), {
-      target: { value: "123", id: "phone" },
-    });
-
-    fireEvent.change(screen.getByLabelText("Lösenord:"), {
-      target: { value: "abc123", id: "password" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Repetera lösenord"), {
-      target: { value: "abc123", id: "repeatPassword" },
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: /spara/i }));
-
-    expect(screen.getByText(/ogiltigt telefonnummer/i)).toBeInTheDocument();
-    expect(userService.saveNewUser).not.toHaveBeenCalled();
-  });
-
   test("Should display error message if passwords don't match", () => {
     renderWithRouter(<SignUp />);
 

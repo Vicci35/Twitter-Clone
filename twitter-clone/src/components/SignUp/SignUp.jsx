@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { validatePhone, passwordMatch } from "../../utils/validators";
+import { passwordMatch } from "../../utils/validators";
 import { saveNewUser } from "../../api/userService";
 import "./SignUpStyle.css";
 
@@ -22,13 +22,6 @@ function SignUp() {
   function handleSubmit(e) {
     e.preventDefault();
     const errorMsg = document.getElementById("wrong-pass");
-
-    // Check phone number and passwords
-    if (!validatePhone(user.phone)) {
-      console.log("Ogiltigt telefonnummer");
-      errorMsg.textContent = "Ogiltigt telefonnummer";
-      return;
-    }
 
     if (!passwordMatch(user.password, user.repeatPassword)) {
       console.log("Lösenorden måste matcha!");
@@ -70,15 +63,6 @@ function SignUp() {
           type="email"
           id="email"
           placeholder="bananpaj@zupahmail.com"
-          onChange={handleInput}
-        />
-
-        <label htmlFor="phone">Telefon:</label>
-        <input
-          className="signupInput"
-          type="phone"
-          id="phone"
-          placeholder="123 456 78 90"
           onChange={handleInput}
         />
 
