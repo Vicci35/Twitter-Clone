@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import "../Login/login.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const LogIn = () => {
         <br />
         <br />
         <h6>
-          Har du inget konto? <a href="#"> Registrera dig</a>
+          <Link to={"/sign-up"}>Inget konto? Skapa ett här:</Link>
         </h6>
       </div>
     </>
