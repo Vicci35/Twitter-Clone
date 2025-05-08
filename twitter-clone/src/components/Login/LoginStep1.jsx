@@ -18,7 +18,7 @@ const LogIn = () => {
           <div className="step1-container">
             <input
               type="text"
-              placeholder="Mobil, e-postadress eller användarnamn"
+              placeholder="E-postadress eller användarnamn"
             ></input>
             <br />
             <br />
