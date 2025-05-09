@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { passwordMatch, includeSpaces } from "../../utils/validators";
 import { saveNewUser } from "../../api/userService";
 import "./SignUpStyle.css";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [user, setUser] = useState({
     name: "",
@@ -22,12 +23,14 @@ function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    // Check password
     if (!passwordMatch(user.password, user.repeatPassword)) {
       setErrorMsg("Lösenorden måste matcha!");
       return;
     }
 
-    if (includeSpaces(user)) {
+    // Check if username or password includes white space
+    if (includeSpaces(user.username) || includeSpaces(user.password)) {
       setErrorMsg("Inga mellanslag tillåts");
       return;
     }
@@ -38,6 +41,9 @@ function SignUp() {
       const data = await saveNewUser(user);
       console.log("Server response:", data);
 
+      if (data.userSaved) {
+        navigate("/");
+      }
       // Reset user info after submiting form
       setUser(() => ({
         name: "",
