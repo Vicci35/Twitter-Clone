@@ -3,7 +3,7 @@ import "../Login/login.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const LogIn = () => {
+const LoginStep1 = () => {
   const navigate = useNavigate();
 
   const handleNext = (e) => {
@@ -40,4 +40,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default LoginStep1;
