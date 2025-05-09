@@ -19,9 +19,8 @@ function SignUp() {
     setUser((prevInfo) => ({ ...prevInfo, [id]: value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const errorMsg = document.getElementById("wrong-pass");
 
     if (!passwordMatch(user.password, user.repeatPassword)) {
       setErrorMsg("Lösenorden måste matcha!");
@@ -34,16 +33,22 @@ function SignUp() {
     }
 
     setErrorMsg("");
-    saveNewUser(user);
 
-    // Reset user info after submiting form
-    setUser(() => ({
-      name: "",
-      username: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-    }));
+    try {
+      const data = await saveNewUser(user);
+      console.log("Server response:", data);
+
+      // Reset user info after submiting form
+      setUser(() => ({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        repeatPassword: "",
+      }));
+    } catch (err) {
+      console.error("Something went wrong:", err);
+    }
   }
 
   return (

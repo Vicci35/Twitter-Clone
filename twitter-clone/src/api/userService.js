@@ -1,9 +1,17 @@
+const API_URL = "http://localhost:3000/api/users/register";
+
 // Send new user data to server
 export async function saveNewUser(userData) {
-  const { name, username, email, password, repeatPassword } = userData;
-  console.log("Name:", name);
-  console.log("Username:", username);
-  console.log("Email:", email);
-  console.log("Password:", password);
-  console.log("Repeat password:", repeatPassword);
+  const resp = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData),
+  });
+
+  if (!resp.ok) {
+    throw new Error("HTTP error");
+  }
+
+  const data = await resp.json();
+  return data;
 }
