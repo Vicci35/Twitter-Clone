@@ -1,10 +1,11 @@
-import React, { use } from "react";
+import React, { useState } from "react";
 import "../Login/login.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const LoginStep1 = () => {
   const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState("");
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -19,6 +20,8 @@ const LoginStep1 = () => {
             <input
               type="text"
               placeholder="E-postadress eller användarnamn"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             ></input>
             <br />
             <br />
