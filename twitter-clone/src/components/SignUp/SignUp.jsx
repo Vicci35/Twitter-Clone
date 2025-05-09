@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { passwordMatch } from "../../utils/validators";
+import { passwordMatch, includeSpaces } from "../../utils/validators";
 import { saveNewUser } from "../../api/userService";
 import "./SignUpStyle.css";
 
 function SignUp() {
+  const [errorMsg, setErrorMsg] = useState("");
   const [user, setUser] = useState({
     name: "",
     username: "",
     email: "",
-    phone: "",
     password: "",
     repeatPassword: "",
   });
@@ -24,21 +24,33 @@ function SignUp() {
     const errorMsg = document.getElementById("wrong-pass");
 
     if (!passwordMatch(user.password, user.repeatPassword)) {
-      console.log("Lösenorden måste matcha!");
-      errorMsg.textContent = "Lösenorden måste matcha!";
+      setErrorMsg("Lösenorden måste matcha!");
       return;
     }
 
-    console.log(user);
-    errorMsg.textContent = "";
+    if (includeSpaces(user)) {
+      setErrorMsg("Inga mellanslag tillåts");
+      return;
+    }
+
+    setErrorMsg("");
     saveNewUser(user);
+
+    // Reset user info after submiting form
+    setUser(() => ({
+      name: "",
+      username: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    }));
   }
 
   return (
     <div id="signUpForm">
       <h1>Skapa konto</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <label htmlFor="name">Namn: </label>
         <input
           className="signupInput"
@@ -84,7 +96,7 @@ function SignUp() {
           onChange={handleInput}
         />
 
-        <p id="wrong-pass"></p>
+        <p id="wrong-pass">{errorMsg}</p>
 
         <input type="submit" value="Spara" id="saveUser" />
       </form>
