@@ -1,30 +1,30 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import LogInStep2 from "./LogInStep2";
 import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import LoginStep1 from "./LoginStep1";
 
-globalThis.fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ token: "fake-token" }),
-  })
-);
+test("navigerar till /login/password när 'Nästa'-knappen klickas", () => {
+  const Step2 = () => (
+    <div>Vi går vidare till sidan där lösenord skrivs i.</div>
+  );
 
-test("kan logga in och spara token", async () => {
   render(
-    <MemoryRouter>
-      <LogInStep2 />
+    <MemoryRouter initialEntries={["/"]}>
+      <Routes>
+        <Route path="/" element={<LoginStep1 />} />
+        <Route path="/login/password" element={<Step2 />} />
+      </Routes>
     </MemoryRouter>
   );
 
-  fireEvent.change(screen.getByPlaceholderText("E-post"), {
-    target: { value: "test@example.com" },
-  });
-  fireEvent.change(screen.getByPlaceholderText("Lösenord"), {
-    target: { value: "password123" },
-  });
+  const input = screen.getByPlaceholderText("E-postadress eller användarnamn");
+  fireEvent.change(input, { target: { value: "test@example.com" } });
 
-  fireEvent.click(screen.getByText("Logga in"));
+  expect(input.value).toBe("test@example.com");
 
-  await waitFor(() => expect(localStorage.getItem("token")).toBe("fake-token"));
+  fireEvent.click(screen.getByText("Nästa"));
+
+  expect(
+    screen.getByText("Vi går vidare till sidan där lösenord skrivs i.")
+  ).toBeInTheDocument();
 });
