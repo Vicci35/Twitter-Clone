@@ -15,9 +15,32 @@ button {
   border-style: none;
 }
 
+.next:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
 .LoggaIn {
   background-color: gray;
   border-style: none;
   color: white;
+}
+
+.LoggaIn:hover {
+  cursor: pointer;
+  background-color: black;
+}
+
+#sign-up {
+  font-size: 1.4em;
+  color: black;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 4px;
+  text-decoration: none;
+}
+
+#sign-up:hover {
+  cursor: pointer;
+  background-color: lightgray;
 }

@@ -36,7 +36,9 @@ const LoginStep1 = () => {
         <br />
         <br />
         <h6>
-          <Link to={"/sign-up"}>Inget konto? Skapa ett här:</Link>
+          <Link id="sign-up" to={"/sign-up"}>
+            Inget konto? Skapa ett här
+          </Link>
         </h6>
       </div>
     </>
