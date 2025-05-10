@@ -1,0 +1,5 @@
+#user-settings {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+}

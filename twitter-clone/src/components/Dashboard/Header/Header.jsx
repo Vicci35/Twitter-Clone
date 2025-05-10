@@ -1,5 +1,6 @@
 // Header including new post button and settings button
 import React from "react";
+import { Link } from "react-router-dom";
 
 function DashHeader() {
   return (
@@ -16,7 +17,9 @@ function DashHeader() {
 
         <div id="head-right" className="head-div">
           <button>New post</button>
-          <button>Settings</button>
+          <Link to={"/user-settings"}>
+            <button>Settings</button>
+          </Link>
         </div>
       </div>
     </>
