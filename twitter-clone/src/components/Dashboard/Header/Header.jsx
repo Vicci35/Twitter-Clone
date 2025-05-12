@@ -23,6 +23,10 @@ function DashHeader() {
     };
   }, []);
 
+  function deleteToken() {
+    localStorage.removeItem("token");
+  }
+
   return (
     <div className="header">
       <div id="head-left" className="head-div">
@@ -42,7 +46,9 @@ function DashHeader() {
           {showDropdown && (
             <div className="dropdown-menu">
               <Link to="/user-settings">Settings</Link>
-              <Link to="/">Log out</Link>
+              <Link to="/" onClick={deleteToken}>
+                Log out
+              </Link>
             </div>
           )}
         </div>
