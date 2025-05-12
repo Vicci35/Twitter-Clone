@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { passwordMatch } from "../../utils/validators";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { passwordMatch, includeSpaces } from "../../utils/validators";
 import { saveNewUser } from "../../api/userService";
 import "./SignUpStyle.css";
 
 function SignUp() {
+  const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
   const [user, setUser] = useState({
     name: "",
     username: "",
     email: "",
-    phone: "",
     password: "",
     repeatPassword: "",
   });
@@ -19,26 +20,53 @@ function SignUp() {
     setUser((prevInfo) => ({ ...prevInfo, [id]: value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const errorMsg = document.getElementById("wrong-pass");
 
+    // Check password
     if (!passwordMatch(user.password, user.repeatPassword)) {
-      console.log("Lösenorden måste matcha!");
-      errorMsg.textContent = "Lösenorden måste matcha!";
+      setErrorMsg("Lösenorden måste matcha!");
       return;
     }
 
-    console.log(user);
-    errorMsg.textContent = "";
-    saveNewUser(user);
+    // Check if username or password includes white space
+    if (includeSpaces(user.username) || includeSpaces(user.password)) {
+      setErrorMsg("Inga mellanslag tillåts");
+      return;
+    }
+
+    setErrorMsg("");
+
+    try {
+      const data = await saveNewUser(user);
+      console.log("Server response:", data);
+
+      if (data.error) {
+        setErrorMsg(data.error);
+        return;
+      }
+
+      if (data.userSaved) {
+        navigate("/");
+      }
+      // Reset user info after submiting form
+      setUser(() => ({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        repeatPassword: "",
+      }));
+    } catch (err) {
+      console.error("Something went wrong:", err);
+    }
   }
 
   return (
     <div id="signUpForm">
       <h1>Skapa konto</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <label htmlFor="name">Namn: </label>
         <input
           className="signupInput"
@@ -84,7 +112,7 @@ function SignUp() {
           onChange={handleInput}
         />
 
-        <p id="wrong-pass"></p>
+        <p id="wrong-pass">{errorMsg}</p>
 
         <input type="submit" value="Spara" id="saveUser" />
       </form>
