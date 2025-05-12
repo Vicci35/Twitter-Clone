@@ -48,6 +48,42 @@
   color: white;
 }
 
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-container button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-right: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.dropdown-menu a {
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-menu a:hover {
+  background-color: #eee;
+}
+
 /* Main content styling  */
 #dash-content {
   height: 90%;
