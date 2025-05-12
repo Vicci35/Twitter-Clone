@@ -28,7 +28,7 @@ const LogInStep2 = () => {
 
       localStorage.setItem("token", data.token);
 
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
     }
