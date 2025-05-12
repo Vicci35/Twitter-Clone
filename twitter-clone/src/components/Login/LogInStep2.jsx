@@ -47,7 +47,7 @@ const LogInStep2 = () => {
         <br />
         <br />
         <input
-          type="text"
+          type="password"
           placeholder="Lösenord"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
