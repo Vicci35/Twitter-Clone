@@ -26,7 +26,7 @@ export default function HomeFeed() {
   return (
     <div className="app-container">
       <div className="main-feed">
-      <h1>Home</h1>
+        <h1>Home</h1>
         <div className="tweet-box">
           <textarea
             placeholder="What's happening?"
@@ -36,7 +36,9 @@ export default function HomeFeed() {
           />
           <div className="tweet-box-footer">
             <span>{140 - tweet.length} tecken kvar</span>
-            <button onClick={handleTweet}>Tweet</button>
+            <button id="post-button" onClick={handleTweet}>
+              Tweet
+            </button>
           </div>
         </div>
 
@@ -58,7 +60,9 @@ export default function HomeFeed() {
         <h3>Trendar bland de du följer</h3>
         <ul className="trending-list">
           {trendingHashtags.map((tag, index) => (
-            <li key={index} className="hashtag">{tag}</li>
+            <li key={index} className="hashtag">
+              {tag}
+            </li>
           ))}
         </ul>
       </aside>
