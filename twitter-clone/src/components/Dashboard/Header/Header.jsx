@@ -35,7 +35,7 @@ function DashHeader() {
       </div>
 
       <div id="head-right" className="head-div">
-        <button>New post</button>
+        {/* <button>New post</button> */}
 
         <div className="dropdown-container" ref={dropdownRef}>
           <button onClick={toggleDropdown}>☰</button>

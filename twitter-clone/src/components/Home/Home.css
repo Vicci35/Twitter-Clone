@@ -1,7 +1,8 @@
 .app-container {
   display: flex;
-  padding: 1rem;
+  /* padding: 1rem; */
   font-family: sans-serif;
+  height: 100%;
 }
 
 .main-feed {
@@ -9,7 +10,7 @@
   margin-right: 2rem;
 }
 
-h1 {
+.main-feed h1 {
   text-align: start;
   color: black;
   font-style: normal;
@@ -63,6 +64,8 @@ textarea {
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #eee;
+  height: 200px;
+  margin-top: 5em;
 }
 
 .search-input {
