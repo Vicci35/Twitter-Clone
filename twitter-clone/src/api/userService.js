@@ -8,10 +8,19 @@ export async function saveNewUser(userData) {
     body: JSON.stringify(userData),
   });
 
-  if (!resp.ok) {
-    throw new Error("HTTP error");
-  }
+  // if (!resp.ok) {
+  //   throw new Error("HTTP error");
+  // }
 
   const data = await resp.json();
+
+  if (data.inputError) {
+    return { error: data.inputError };
+  }
+
+  if (data.signupError) {
+    return { error: data.signupError };
+  }
+
   return data;
 }
