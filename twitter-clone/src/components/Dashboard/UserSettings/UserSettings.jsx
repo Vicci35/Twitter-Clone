@@ -87,7 +87,9 @@ function UserSettings() {
           )}
         </>
 
-        <Link to={"/dashboard"}>Back</Link>
+        <Link to={"/dashboard"} id="to-dash">
+          &larr; Back
+        </Link>
       </div>
     </>
   );

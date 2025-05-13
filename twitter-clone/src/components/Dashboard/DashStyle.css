@@ -78,10 +78,60 @@
   padding: 10px;
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .dropdown-menu a:hover {
   background-color: #eee;
+}
+
+.show-logout {
+  position: absolute;
+  top: calc(50% - 200px);
+  width: 300px;
+  height: 200px;
+  background-color: whitesmoke;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.hide-logout {
+  display: none;
+}
+
+#confirm {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#confirm-logout,
+#cancel-logout {
+  width: 80px;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 4px;
+  text-decoration: none;
+}
+
+#confirm-logout {
+  background-color: whitesmoke;
+  color: black;
+}
+
+#confirm-logout:hover {
+  background-color: black;
+  color: white;
+}
+
+#cancel-logout {
+  background-color: white;
+}
+
+#cancel-logout:hover {
+  cursor: pointer;
+  background-color: lightgrey;
 }
 
 /* Main content styling  */
