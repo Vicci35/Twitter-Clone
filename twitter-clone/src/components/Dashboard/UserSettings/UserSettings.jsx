@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useActionData, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UpdateInfoForm from "./updateForm";
 import "./SettingStyle.css";
 
@@ -42,8 +42,6 @@ function UserSettings() {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log(response);
 
         if (!response.ok) {
           throw new Error("Inte inloggad");
