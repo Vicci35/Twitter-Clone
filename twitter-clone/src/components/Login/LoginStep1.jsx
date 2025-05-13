@@ -6,10 +6,31 @@ import { Link } from "react-router-dom";
 const LoginStep1 = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
 
-  const handleNext = (e) => {
+  const handleNext = async (e) => {
     e.preventDefault();
-    navigate("/login/password");
+    setError("");
+
+    try {
+      const res = await fetch("http://localhost:3000/api/check-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: inputValue }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.message || "Ogiltig e-post eller användarnamn.");
+        return;
+      }
+
+      navigate("/login/password", { state: { email: inputValue } });
+    } catch (error) {
+      setError("Serverfel - Försök igen.");
+    }
   };
   return (
     <>
@@ -22,8 +43,9 @@ const LoginStep1 = () => {
               placeholder="E-postadress eller användarnamn"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-            ></input>
+            />
             <br />
+            {error && <p className="error-message">{error}</p>}
             <br />
             <button className="next" type="submit">
               Nästa
