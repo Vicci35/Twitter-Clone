@@ -9,6 +9,7 @@ const LogInStep2 = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (location.state?.email) {
@@ -18,6 +19,7 @@ const LogInStep2 = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
       const response = await fetch("http://localhost:3000/api/login", {
@@ -32,6 +34,7 @@ const LogInStep2 = () => {
 
       if (!response.ok) {
         console.log("Felmeddelande:", data.message || "Något gick fel");
+        setError(data.message || "Något gick fel");
         return;
       }
 
@@ -40,6 +43,7 @@ const LogInStep2 = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
+      setError("Ett tekniskt fel inträffade, försök igen.");
     }
   };
   return (
@@ -60,7 +64,10 @@ const LogInStep2 = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Lösenord"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
           />
           <button
             type="button"
@@ -70,6 +77,7 @@ const LogInStep2 = () => {
             {showPassword ? "Dölj" : "Visa"}
           </button>
         </div>
+        {error && <p className="error-message">{error}</p>}
         <br />
         <h6>
           <a className="forgot-password-tag" href="#">
