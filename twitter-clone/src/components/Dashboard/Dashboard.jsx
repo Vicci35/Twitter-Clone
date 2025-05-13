@@ -11,6 +11,12 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (userData) {
+      console.log("UserData updated:", userData);
+    }
+  }, [userData]);
+
+  useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
 
@@ -40,20 +46,27 @@ function Dashboard() {
 
   return (
     <>
-      <div id="dash-main-div">
-        {/* HEADER */}
-        <DashHeader />
+      {userData ? (
+        <div id="dash-main-div">
+          {/* HEADER */}
+          <DashHeader userName={userData.nickname} />
 
-        {/* MAIN CONTENT START */}
-        <div id="dash-content">
-          <HomeFeed />
-          {/* <h3>Posts will be shown here</h3> */}
-        </div>
-        {/* MAIN CONTENT END
+          {/* MAIN CONTENT START */}
+          <div id="dash-content">
+            <HomeFeed />
+            {/* <h3>Posts will be shown here</h3> */}
+          </div>
+          {/* MAIN CONTENT END
 
         {/* FOOTER */}
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      ) : (
+        <div>
+          <h2>Loading...</h2>
+          <i class="fa-solid fa-spinner fa-xl"></i>
+        </div>
+      )}
     </>
   );
 }
