@@ -64,7 +64,7 @@ function Dashboard() {
       ) : (
         <div>
           <h2>Loading...</h2>
-          <i class="fa-solid fa-spinner fa-xl"></i>
+          <i className="fa-solid fa-spinner fa-xl"></i>
         </div>
       )}
     </>
