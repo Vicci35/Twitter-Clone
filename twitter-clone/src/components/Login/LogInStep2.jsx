@@ -5,8 +5,10 @@ import "../Login/login.css";
 const LogInStep2 = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (location.state?.email) {
@@ -53,12 +55,21 @@ const LogInStep2 = () => {
         />
         <br />
         <br />
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="password-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Lösenord"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? "Dölj" : "Visa"}
+          </button>
+        </div>
         <br />
         <h6>
           <a className="forgot-password-tag" href="#">
