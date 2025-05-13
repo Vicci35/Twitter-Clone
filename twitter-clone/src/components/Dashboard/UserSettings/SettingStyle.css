@@ -4,6 +4,21 @@
   flex-direction: column;
 }
 
+#to-dash {
+  margin: 40px auto;
+  border: 1px solid;
+  border-radius: 12px;
+  background-color: white;
+  text-decoration: none;
+  color: black;
+  width: 200px;
+  padding: 5px;
+}
+
+#to-dash:hover {
+  background-color: lightgrey;
+}
+
 #update-info {
   display: flex;
   flex-direction: column;
