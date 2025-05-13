@@ -44,3 +44,30 @@ button {
   cursor: pointer;
   background-color: lightgray;
 }
+
+.password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.password-container input {
+  width: 200px;
+  padding: 5px;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  color: blue;
+  padding: 0;
+  display: inline-block;
+  line-height: 1;
+}
+
+.password-container:active {
+  background: none;
+}
