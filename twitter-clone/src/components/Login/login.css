@@ -71,3 +71,9 @@ button {
 .password-container:active {
   background: none;
 }
+
+.error-message {
+  color: blue;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
