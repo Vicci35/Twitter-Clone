@@ -1,14 +1,25 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../Login/login.css";
 
 const LogInStep2 = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (location.state?.email) {
+      setEmail(location.state.email);
+    }
+  }, [location.state]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
       const response = await fetch("http://localhost:3000/api/login", {
@@ -23,6 +34,7 @@ const LogInStep2 = () => {
 
       if (!response.ok) {
         console.log("Felmeddelande:", data.message || "Något gick fel");
+        setError(data.message || "Något gick fel");
         return;
       }
 
@@ -31,6 +43,7 @@ const LogInStep2 = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
+      setError("Ett tekniskt fel inträffade, försök igen.");
     }
   };
   return (
@@ -46,12 +59,25 @@ const LogInStep2 = () => {
         />
         <br />
         <br />
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="password-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Lösenord"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
+          />
+          <button
+            type="button"
+            className="toggle-password"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? "Dölj" : "Visa"}
+          </button>
+        </div>
+        {error && <p className="error-message">{error}</p>}
         <br />
         <h6>
           <a className="forgot-password-tag" href="#">
