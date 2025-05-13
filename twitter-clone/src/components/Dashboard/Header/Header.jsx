@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"; // Lägg till useRef och useEffect
 import { Link } from "react-router-dom";
 
-function DashHeader() {
+function DashHeader({ userName }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null); // ← Här skapas dropdownRef
 
@@ -35,7 +35,7 @@ function DashHeader() {
 
       <div id="head-mid" className="head-div">
         {/* Hämta användarnamn från cookie/localStorage/Token */}
-        <h1>Welcome *user*</h1>
+        <h1>{`Welcome ${userName}`}</h1>
       </div>
 
       <div id="head-right" className="head-div">
