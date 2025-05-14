@@ -17,6 +17,8 @@ function UserSettings() {
   });
   const navigate = useNavigate();
 
+  // console.log(userData);
+
   useEffect(() => {
     if (userData) {
       setUserInfo({
@@ -65,8 +67,10 @@ function UserSettings() {
           {userData ? (
             <div>
               <h1>Manage user settings here</h1>
+              <h4>{`Member since: ${userData.createdAt.split("T")[0]}`}</h4>
               <div>
                 <UpdateInfoForm
+                  id={userData._id}
                   name={userInfo.name}
                   nickname={userInfo.nickname}
                   email={userInfo.email}

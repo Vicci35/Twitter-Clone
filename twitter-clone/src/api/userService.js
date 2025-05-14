@@ -8,10 +8,6 @@ export async function saveNewUser(userData) {
     body: JSON.stringify(userData),
   });
 
-  // if (!resp.ok) {
-  //   throw new Error("HTTP error");
-  // }
-
   const data = await resp.json();
 
   if (data.inputError) {
@@ -21,6 +17,22 @@ export async function saveNewUser(userData) {
   if (data.signupError) {
     return { error: data.signupError };
   }
+
+  return data;
+}
+
+// Update user info
+export async function updateUserInfo(updatedInfo) {
+  console.log("This will be sent to the server:", updatedInfo);
+
+  const resp = await fetch("http://localhost:3000/api/users/update-info", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedInfo),
+  });
+
+  const data = await resp.json();
+  console.log(data);
 
   return data;
 }
