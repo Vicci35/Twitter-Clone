@@ -67,7 +67,7 @@ function UserSettings() {
           {userData ? (
             <div>
               <h1>Manage user settings here</h1>
-              <h4>{`Member since: ${userData.createdAt.split("T")[0]}`}</h4>
+              <h4>{`Signed up: ${userData.createdAt.split("T")[0]}`}</h4>
               <div>
                 <UpdateInfoForm
                   id={userData._id}
