@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { updateUserInfo } from "../../../api/userService.js";
+import { updateUserInfo } from "../../../../api/userService.js";
 
 function UpdateInfoForm({
   id,

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function DashHeader({ userName }) {
@@ -27,6 +27,7 @@ function DashHeader({ userName }) {
 
   function deleteToken() {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
   }
 
   return (
@@ -44,6 +45,7 @@ function DashHeader({ userName }) {
           <button onClick={toggleDropdown}>☰</button>
           {showDropdown && (
             <div className="dropdown-menu">
+              <Link to="/profile">Profile</Link>
               <Link to="/user-settings">Settings</Link>
               <a onClick={() => setConfirmLogout((prevVal) => !prevVal)}>
                 Logout
