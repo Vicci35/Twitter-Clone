@@ -14,9 +14,6 @@ describe("SignUp", () => {
   test("Should display error message if passwords don't match", () => {
     renderWithRouter(<SignUp />);
 
-    fireEvent.change(screen.getByLabelText("Telefon:"), {
-      target: { value: "123 213 12 23", id: "phone" },
-    });
     fireEvent.change(screen.getByLabelText("Lösenord:"), {
       target: { value: "abc123", id: "password" },
     });
@@ -41,9 +38,6 @@ describe("SignUp", () => {
     });
     fireEvent.change(screen.getByLabelText("E-post:"), {
       target: { value: "seb@example.com", id: "email" },
-    });
-    fireEvent.change(screen.getByLabelText("Telefon:"), {
-      target: { value: "123 456 78 90", id: "phone" },
     });
     fireEvent.change(screen.getByLabelText("Lösenord:"), {
       target: { value: "abc123", id: "password" },
