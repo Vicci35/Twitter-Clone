@@ -16,34 +16,50 @@ function Profile() {
   }, [user]);
 
   if (!user) {
-    return <p>Loading...</p>; // Visa något medan det redirectas
+    return <p>Loading...</p>;
   }
 
   return (
     <>
       <h1>Profile</h1>
-      <div id="profile">
-        Profile picture
-        <span>
-          <b>Info:</b> User Info
-        </span>
-        <span>
-          <b>Info:</b> User Info
-        </span>
-        <span>
-          <b>Info:</b> User Info
-        </span>
-        <span>
-          <b>Info:</b> User Info
-        </span>
-        <span>
-          <b>Info:</b> User Info
-        </span>
-        <span>
-          <b>Info:</b> User Info
-        </span>
+      <div id="profile-card">
+        <div id="profile-left" className="profile-div">
+          {/* Fetch image from database? */}
+          <img
+            id="profile-pic"
+            src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg"
+            alt="anonymous"
+          />
+          <div id="name-div">
+            <h3>{user.name}</h3>
+            <p>{user.nickname}</p>
+          </div>
+        </div>
+
+        <div id="profile-right" className="profile-div">
+          <div className="info-row">
+            <span className="profile-icon"> 💬</span> {user.about}
+          </div>
+          <div className="info-row">
+            <span className="profile-icon">🏠 </span> {user.hometown}
+          </div>
+          <div className="info-row">
+            <span className="profile-icon">💼 </span>
+            {user.occupation}
+          </div>
+          <div className="info-row">
+            <span className="profile-icon">📧 </span>
+            {user.email}
+          </div>
+          <div className="info-row">
+            <span className="profile-icon">🌐</span>
+            <a href="#">{user.website}</a>
+          </div>
+        </div>
       </div>
-      <Link to="/dashboard">&larr; Back</Link>
+      <Link to="/dashboard" id="to-dashboard">
+        &larr; Back
+      </Link>
     </>
   );
 }
