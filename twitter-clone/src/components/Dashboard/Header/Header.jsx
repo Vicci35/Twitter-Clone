@@ -56,7 +56,7 @@ function DashHeader({ userName }) {
         </div>
       </div>
 
-      <div className={showLogoutDiv}>
+      <div className={showLogoutDiv} data-testid="logout-confirmation">
         <h3>Do you want to log out?</h3>
         <div id="confirm">
           <Link to="/" onClick={deleteToken} id="confirm-logout">
