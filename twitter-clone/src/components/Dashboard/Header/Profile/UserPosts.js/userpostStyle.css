@@ -17,3 +17,9 @@
   padding: 10px;
   flex: 2;
 }
+
+#followers h2,
+#user-posts h2 {
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
