@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../../../utils/UserContext";
 
 export function deleteToken() {
   localStorage.removeItem("token");
@@ -11,6 +12,7 @@ function DashHeader({ userName }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
   const dropdownRef = useRef(null);
+  const { user } = useUser();
 
   const showLogoutDiv = confirmLogout ? "show-logout" : "hide-logout";
 
@@ -38,7 +40,7 @@ function DashHeader({ userName }) {
       </div>
 
       <div id="head-mid" className="head-div">
-        <h1>{`Welcome ${userName}`}</h1>
+        <h1>{`Welcome ${user.nickname}`}</h1>
       </div>
 
       <div id="head-right" className="head-div">

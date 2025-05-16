@@ -59,7 +59,6 @@ function SignUp() {
 
     try {
       const data = await saveNewUser(user);
-      console.log("Server response:", data);
 
       if (data.error) {
         setErrorMsg(data.error);

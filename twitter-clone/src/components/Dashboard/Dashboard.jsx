@@ -13,7 +13,6 @@ function Dashboard() {
 
   useEffect(() => {
     if (user) {
-      console.log("UserData updated:", user);
     }
   }, [user]);
 
@@ -27,8 +26,6 @@ function Dashboard() {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log(response);
 
         if (!response.ok) {
           throw new Error("Inte inloggad");
