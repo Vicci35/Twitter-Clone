@@ -1,5 +1,11 @@
+import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+export function deleteToken() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}
 
 function DashHeader({ userName }) {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -24,11 +30,6 @@ function DashHeader({ userName }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  function deleteToken() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  }
 
   return (
     <div className="header">

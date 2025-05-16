@@ -3,9 +3,17 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import LoginStep1 from "./LoginStep1";
 
-test("navigerar till /login/password när 'Nästa'-knappen klickas", () => {
+test("navigerar till /login/password när 'Nästa'-knappen klickas", async () => {
   const Step2 = () => (
     <div>Vi går vidare till sidan där lösenord skrivs i.</div>
+  );
+
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      status: 200,
+      json: () => Promise.resolve({}),
+    })
   );
 
   render(
@@ -24,7 +32,8 @@ test("navigerar till /login/password när 'Nästa'-knappen klickas", () => {
 
   fireEvent.click(screen.getByText("Nästa"));
 
-  expect(
-    screen.getByText("Vi går vidare till sidan där lösenord skrivs i.")
-  ).toBeInTheDocument();
+  const text = await screen.findByText(
+    "Vi går vidare till sidan där lösenord skrivs i."
+  );
+  expect(text).toBeInTheDocument();
 });
