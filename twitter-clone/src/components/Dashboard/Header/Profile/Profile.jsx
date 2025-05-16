@@ -1,6 +1,7 @@
 import { useUser } from "../../../../utils/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import UserPosts from "./UserPosts.js/UserPosts";
 import "./profile.css";
 
 function Profile() {
@@ -56,6 +57,11 @@ function Profile() {
             <a href="#">{user.website}</a>
           </div>
         </div>
+      </div>
+
+      {/* Posts + followers */}
+      <div>
+        <UserPosts />
       </div>
       <Link to="/dashboard" id="to-dashboard">
         &larr; Back
