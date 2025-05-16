@@ -52,13 +52,10 @@ function UpdateInfoForm({
 
   async function handleUpdate(e) {
     e.preventDefault();
-    console.log("Updated user:", updatedInfo);
     try {
       const data = await updateUserInfo(updatedInfo);
-      console.log("Resp:", data);
       if (data.ok) {
         setshowUpdateMsg(true);
-        console.log(showUpdateMsg);
       }
     } catch (err) {
       console.error(err);

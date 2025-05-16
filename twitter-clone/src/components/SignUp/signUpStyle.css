@@ -40,6 +40,18 @@ label {
   cursor: pointer;
 }
 
+#password-check {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 4px;
+  margin: 5px auto;
+}
+
+#password-check p {
+  font-style: normal;
+  font-size: 14px;
+}
+
 #toStart {
   margin-top: 20px;
   border: 1px solid;

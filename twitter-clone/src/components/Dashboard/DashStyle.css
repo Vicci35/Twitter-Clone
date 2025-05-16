@@ -142,6 +142,13 @@
   align-items: center;
 }
 
+#profile-container {
+  /* display: flex;
+  flex-direction: column; */
+  height: 90%;
+  flex: 1;
+}
+
 .fa-spinner {
   animation: spin 5s linear infinite;
 }

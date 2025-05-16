@@ -1,10 +1,18 @@
+import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../../../utils/UserContext";
+
+export function deleteToken() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}
 
 function DashHeader({ userName }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
   const dropdownRef = useRef(null);
+  const { user } = useUser();
 
   const showLogoutDiv = confirmLogout ? "show-logout" : "hide-logout";
 
@@ -25,11 +33,6 @@ function DashHeader({ userName }) {
     };
   }, []);
 
-  function deleteToken() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  }
-
   return (
     <div className="header">
       <div id="head-left" className="head-div">
@@ -37,7 +40,7 @@ function DashHeader({ userName }) {
       </div>
 
       <div id="head-mid" className="head-div">
-        <h1>{`Welcome ${userName}`}</h1>
+        <h1>{`Welcome ${user.nickname}`}</h1>
       </div>
 
       <div id="head-right" className="head-div">
@@ -55,7 +58,7 @@ function DashHeader({ userName }) {
         </div>
       </div>
 
-      <div className={showLogoutDiv}>
+      <div className={showLogoutDiv} data-testid="logout-confirmation">
         <h3>Do you want to log out?</h3>
         <div id="confirm">
           <Link to="/" onClick={deleteToken} id="confirm-logout">
