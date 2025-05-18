@@ -12,6 +12,11 @@
   border-right: 1px solid;
   padding: 10px;
   flex: 1;
+  overflow-y: scroll;
+}
+
+#followers::-webkit-scrollbar {
+  display: none;
 }
 
 #followers h2,
@@ -23,6 +28,11 @@
 #user-posts {
   padding: 10px;
   flex: 2;
+  overflow-y: scroll;
+}
+
+#user-posts::-webkit-scrollbar {
+  display: none;
 }
 
 .post-card {
