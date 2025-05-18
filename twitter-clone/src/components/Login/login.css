@@ -1,0 +1,79 @@
+input {
+  width: 200px;
+  padding: 5px 0 5px 0;
+}
+
+button {
+  border-radius: 12px;
+  padding: 5px 0 5px 0;
+  width: 300px;
+}
+
+.next {
+  background-color: black;
+  color: white;
+  border-style: none;
+}
+
+.next:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.LoggaIn {
+  background-color: gray;
+  border-style: none;
+  color: white;
+}
+
+.LoggaIn:hover {
+  cursor: pointer;
+  background-color: black;
+}
+
+#sign-up {
+  font-size: 1.4em;
+  color: black;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 4px;
+  text-decoration: none;
+}
+
+#sign-up:hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
+
+.password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.password-container input {
+  width: 200px;
+  padding: 5px;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  color: blue;
+  padding: 0;
+  display: inline-block;
+  line-height: 1;
+}
+
+.password-container:active {
+  background: none;
+}
+
+.error-message {
+  color: blue;
+  font-size: 0.9em;
+  margin-top: 10px;
+}

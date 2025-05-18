@@ -1,0 +1,56 @@
+#signUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#signUpForm h1 {
+  font-style: normal;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+.signupInput {
+  width: 200px;
+  text-align: center;
+}
+
+#wrong-pass {
+  /* height: 20px; */
+  margin: 10px auto;
+  color: red;
+}
+
+#saveUser {
+  display: block;
+  margin: 10px auto;
+  padding: 2px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 1em;
+  width: 100px;
+}
+
+#saveUser:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+#toStart {
+  margin-top: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 4px;
+  text-decoration: none;
+  font-size: 1.1em;
+  color: darkblue;
+}
+
+#toStart:hover {
+  background-color: rgba(0, 0, 139, 0.8);
+  color: white;
+}
