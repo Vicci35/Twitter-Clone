@@ -1,0 +1,25 @@
+#activity-div {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 600px;
+  border: 1px solid;
+  border-radius: 12px;
+}
+
+#followers {
+  border-right: 1px solid;
+  padding: 10px;
+  flex: 1;
+}
+
+#user-posts {
+  padding: 10px;
+  flex: 2;
+}
+
+#followers h2,
+#user-posts h2 {
+  text-decoration: underline;
+  margin-bottom: 15px;
+}

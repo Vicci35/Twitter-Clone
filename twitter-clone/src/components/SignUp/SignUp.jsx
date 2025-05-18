@@ -1,6 +1,11 @@
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { passwordMatch, includeSpaces } from "../../utils/validators";
+import {
+  passwordMatch,
+  isStrongPassword,
+  includeSpaces,
+} from "../../utils/validators";
 import { saveNewUser } from "../../api/userService";
 import "./SignUpStyle.css";
 
@@ -15,10 +20,21 @@ function SignUp() {
     repeatPassword: "",
   });
 
+  const [hasCapital, setHasCapital] = useState(false);
+  const [hasNumber, setHasNumber] = useState(false);
+  const [hasSpecial, setHasSpecial] = useState(false);
+
   function handleInput(e) {
     const { id, value } = e.target;
     setUser((prevInfo) => ({ ...prevInfo, [id]: value }));
   }
+
+  useEffect(() => {
+    const pw = user.password;
+    setHasCapital(/[A-Z]/.test(pw));
+    setHasNumber(/[0-9]/.test(pw));
+    setHasSpecial(/[!@#$%^&*]/.test(pw));
+  }, [user.password]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,6 +43,10 @@ function SignUp() {
     if (!passwordMatch(user.password, user.repeatPassword)) {
       setErrorMsg("Lösenorden måste matcha!");
       return;
+    }
+
+    if (!isStrongPassword(user.password)) {
+      setErrorMsg("Svagt lösenord");
     }
 
     // Check if username or password includes white space
@@ -39,7 +59,6 @@ function SignUp() {
 
     try {
       const data = await saveNewUser(user);
-      console.log("Server response:", data);
 
       if (data.error) {
         setErrorMsg(data.error);
@@ -111,6 +130,27 @@ function SignUp() {
           placeholder="Repetera lösenord"
           onChange={handleInput}
         />
+
+        <div id="password-check">
+          <p
+            id="capital"
+            style={{ color: hasCapital ? "green" : "rgba(0, 0, 0, 0.6)" }}
+          >
+            Minst en versal
+          </p>
+          <p
+            id="number"
+            style={{ color: hasNumber ? "green" : "rgba(0, 0, 0, 0.6)" }}
+          >
+            Minst en siffra
+          </p>
+          <p
+            id="special"
+            style={{ color: hasSpecial ? "green" : "rgba(0, 0, 0, 0.6)" }}
+          >
+            Minst ett specialtecken
+          </p>
+        </div>
 
         <p id="wrong-pass">{errorMsg}</p>
 

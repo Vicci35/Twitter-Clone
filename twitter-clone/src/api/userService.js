@@ -23,8 +23,6 @@ export async function saveNewUser(userData) {
 
 // Update user info
 export async function updateUserInfo(updatedInfo) {
-  console.log("This will be sent to the server:", updatedInfo);
-
   const resp = await fetch("http://localhost:3000/api/users/update-info", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -32,7 +30,6 @@ export async function updateUserInfo(updatedInfo) {
   });
 
   const data = await resp.json();
-  console.log(data);
 
   return data;
 }
