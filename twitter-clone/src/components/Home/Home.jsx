@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "./Home.css"; // Importera CSS-filen
-import PostForm from "../Dashboard/PostForm";
-import { useUser } from "../../utils/UserContext"
-import { fetchAllPosts } from "../../api/posts";
+import "./Home.css";
+import { useUser } from "../../utils/UserContext";
+import { fetchAllPosts, createPost } from "../../api/posts";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
 
 export default function HomeFeed() {
   const { user } = useUser();
+  const [content, setContent] = useState("");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -26,16 +27,45 @@ export default function HomeFeed() {
     if (user) loadPosts();
   }, [user]);
 
+  const handleTweet = async () => {
+    if (!content.trim() || content.length > 140) return;
+
+    try {
+      const newPost = await createPost({
+        content,
+        author: user._id,
+      });
+
+      setPosts([newPost, ...posts]);
+      setContent("");
+      setError("");
+    } catch (err) {
+      console.error(err);
+      setError("Could not post. Please try again.");
+    }
+  };
+
   return (
     <div className="app-container">
       <div className="main-feed">
         <h1 className="header">Home</h1>
 
         {user && (
-          <PostForm
-            userId={user._id}
-            onPostCreated={(newPost) => setPosts([newPost, ...posts])}
-          />
+          <div className="tweet-box">
+            <textarea
+              placeholder="What's happening?"
+              maxLength={140}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <div className="tweet-box-footer">
+              <span>{140 - content.length} tecken kvar</span>
+              <button id="post-button" onClick={handleTweet}>
+                Tweet
+              </button>
+            </div>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </div>
         )}
 
         {loading ? (
@@ -46,7 +76,8 @@ export default function HomeFeed() {
           <div className="tweets-list">
             {posts.map((post) => (
               <div key={post._id} className="tweet">
-                <strong>{post.author.nickname}</strong>: {post.content}
+                <strong>{post.author?.nickname || "Unknown"}</strong>:{" "}
+                {post.content}
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
