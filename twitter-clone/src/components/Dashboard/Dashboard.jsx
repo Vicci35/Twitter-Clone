@@ -6,13 +6,10 @@ import DashHeader from "./Header/Header";
 import HomeFeed from "../Home/Home";
 import Footer from "./Footer/Footer";
 import "./DashStyle.css";
-import PostForm from "./PostForm";
-import { fetchAllPosts } from "../../api/posts.js";
 
 function Dashboard() {
   const navigate = useNavigate();
   const { user, setUser } = useUser();
-  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -48,19 +45,6 @@ function Dashboard() {
     fetchData();
   }, [navigate]);
 
-  useEffect(() => {
-  const loadPosts = async () => {
-    try {
-      const data = await fetchAllPosts();
-      setPosts(data);
-    } catch (err) {
-      console.error("Failed to load posts:", err);
-    }
-  };
-
-  if (user) loadPosts();
-}, [user]);
-
   return (
     <>
       {user ? (
@@ -72,10 +56,6 @@ function Dashboard() {
           <div id="dash-content">
             <HomeFeed />
             {/* <h3>Posts will be shown here</h3> */}
-            <PostForm
-              userId={user._id}
-              onPostCreated={(newPost) => setPosts([newPost, ...posts])}
-            />
           </div>
           {/* MAIN CONTENT END
 

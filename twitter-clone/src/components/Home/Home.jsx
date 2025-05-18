@@ -1,54 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css"; // Importera CSS-filen
-
-const mockTweets = [
-  { id: 1, user: "Alice", content: "Loving the weather! #sunshine" },
-  { id: 2, user: "Bob", content: "Crypto is wild right now. #Crypto" },
-];
+import PostForm from "../Dashboard/PostForm";
+import { useUser } from "../../utils/UserContext"
+import { fetchAllPosts } from "../../api/posts";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
 
 export default function HomeFeed() {
-  const [tweet, setTweet] = useState("");
-  const [tweets, setTweets] = useState(mockTweets);
+  const { user } = useUser();
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleTweet = () => {
-    if (tweet.length === 0 || tweet.length > 140) return;
-    const newTweet = {
-      id: Date.now(),
-      user: "Du", // Placeholder
-      content: tweet,
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const data = await fetchAllPosts();
+        setPosts(data);
+      } catch (err) {
+        console.error("Failed to load posts", err);
+      } finally {
+        setLoading(false);
+      }
     };
-    setTweets([newTweet, ...tweets]);
-    setTweet("");
-  };
+
+    if (user) loadPosts();
+  }, [user]);
 
   return (
     <div className="app-container">
       <div className="main-feed">
         <h1 className="header">Home</h1>
-        <div className="tweet-box">
-          <textarea
-            placeholder="What's happening?"
-            maxLength={140}
-            value={tweet}
-            onChange={(e) => setTweet(e.target.value)}
-          />
-          <div className="tweet-box-footer">
-            <span>{140 - tweet.length} tecken kvar</span>
-            <button id="post-button" onClick={handleTweet}>
-              Tweet
-            </button>
-          </div>
-        </div>
 
-        <div className="tweets-list">
-          {tweets.map((t) => (
-            <div key={t.id} className="tweet">
-              <strong>{t.user}</strong>: {t.content}
-            </div>
-          ))}
-        </div>
+        {user && (
+          <PostForm
+            userId={user._id}
+            onPostCreated={(newPost) => setPosts([newPost, ...posts])}
+          />
+        )}
+
+        {loading ? (
+          <p>Loading posts...</p>
+        ) : posts.length === 0 ? (
+          <p>No posts yet. Be the first!</p>
+        ) : (
+          <div className="tweets-list">
+            {posts.map((post) => (
+              <div key={post._id} className="tweet">
+                <strong>{post.author.nickname}</strong>: {post.content}
+                <div className="timestamp">
+                  {new Date(post.createdAt).toLocaleString()}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <aside className="sidebar">
