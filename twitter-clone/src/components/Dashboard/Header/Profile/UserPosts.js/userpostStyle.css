@@ -3,6 +3,7 @@
   justify-content: center;
   margin: auto;
   width: 600px;
+  height: 245px;
   border: 1px solid;
   border-radius: 12px;
 }
@@ -13,13 +14,19 @@
   flex: 1;
 }
 
+#followers h2,
+#user-posts h2 {
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
+
 #user-posts {
   padding: 10px;
   flex: 2;
 }
 
-#followers h2,
-#user-posts h2 {
-  text-decoration: underline;
-  margin-bottom: 15px;
+.post-card {
+  border: 1px solid;
+  padding: 4px;
+  margin: 10px auto;
 }
