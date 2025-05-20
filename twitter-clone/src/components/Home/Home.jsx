@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { useUser } from "../../utils/UserContext";
+import { searchPosts } from "../../controllers/searchController.js";
 import { fetchAllPosts, createPost } from "../../api/posts";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
@@ -11,21 +12,38 @@ export default function HomeFeed() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchWord, setSearchWord] = useState("");
+
+  // useEffect(() => {
+  //   const loadPosts = async () => {
+  //     try {
+  //       const data = await fetchAllPosts();
+  //       setPosts(data);
+  //     } catch (err) {
+  //       console.error("Failed to load posts", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   if (user) loadPosts();
+  // }, [user]);
 
   useEffect(() => {
-    const loadPosts = async () => {
+    async function getSearch(searchTerm) {
       try {
-        const data = await fetchAllPosts();
-        setPosts(data);
+        const response = await searchPosts(searchTerm);
+        console.log(response);
+        setPosts(response);
       } catch (err) {
         console.error("Failed to load posts", err);
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    if (user) loadPosts();
-  }, [user]);
+    getSearch(searchWord);
+  }, [searchWord]);
 
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
@@ -92,6 +110,8 @@ export default function HomeFeed() {
           type="text"
           placeholder="Sök hashtags eller personer"
           className="search-input"
+          value={searchWord}
+          onChange={(e) => setSearchWord(e.target.value)}
         />
         <h3>Trendar bland de du följer</h3>
         <ul className="trending-list">
