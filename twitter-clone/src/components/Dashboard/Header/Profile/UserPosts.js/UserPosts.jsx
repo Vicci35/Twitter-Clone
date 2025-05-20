@@ -4,19 +4,31 @@ import { profilePosts } from "../../../../../api/posts.js";
 import PostCard from "./PostCard";
 import "./userpostStyle.css";
 
-function UserPosts() {
+function UserPosts({ userId: propUserId }) {
   const { user } = useUser();
-  const userId = user._id;
+  const [loading, setloading] = useState(true);
   const [posts, setPosts] = useState([]);
 
-  console.log(userId);
-  useEffect(() => {
-    async function getPosts(userId) {
-      const data = await profilePosts(userId);
-      setPosts(data);
-    }
+  const userId = propUserId || (user && user._id);
 
-    getPosts(userId);
+  console.log(userId);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const getPosts = async () => {
+      try {
+        setloading(true);
+        const data = await profilePosts(userId);
+        setPosts(data);
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      } finally {
+        setloading(false);
+      }
+    };
+
+    getPosts();
   }, [userId]);
 
   return (
@@ -29,13 +41,13 @@ function UserPosts() {
 
         <div id="user-posts">
           <h2>Posts</h2>
-          <div>
-            {posts.length > 0 ? (
-              posts.map((post) => <PostCard key={post._id} post={post} />)
-            ) : (
-              <h3>No posts to show</h3>
-            )}
-          </div>
+          {loading ? (
+            <p>Loading posts...</p>
+          ) : posts.length > 0 ? (
+            posts.map((post) => <PostCard key={post._id} post={post} />)
+          ) : (
+            <h3>No posts to show</h3>
+          )}
         </div>
       </div>
     </>
