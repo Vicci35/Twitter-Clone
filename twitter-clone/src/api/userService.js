@@ -33,3 +33,11 @@ export async function updateUserInfo(updatedInfo) {
 
   return data;
 }
+
+// Get user info for profile
+export async function getProfileInfo(id) {
+  const resp = await fetch(`http://localhost:3000/api/users/${id}`);
+
+  const data = await resp.json();
+  return data;
+}

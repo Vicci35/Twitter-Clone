@@ -3,6 +3,7 @@ import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
 import { fetchAllPosts, createPost } from "../../api/posts";
+import UserProfile from "./UserProfile/UserProfile.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
 
@@ -13,27 +14,14 @@ export default function HomeFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchWord, setSearchWord] = useState("");
-
-  // useEffect(() => {
-  //   const loadPosts = async () => {
-  //     try {
-  //       const data = await fetchAllPosts();
-  //       setPosts(data);
-  //     } catch (err) {
-  //       console.error("Failed to load posts", err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (user) loadPosts();
-  // }, [user]);
+  const [displayProfile, setDisplayProfile] = useState(false);
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+  const [selectedAuthorId, setSelectedAuthorId] = useState("");
 
   useEffect(() => {
     async function getSearch(searchTerm) {
       try {
         const response = await searchPosts(searchTerm);
-        console.log(response);
         setPosts(response);
       } catch (err) {
         console.error("Failed to load posts", err);
@@ -62,6 +50,14 @@ export default function HomeFeed() {
       setError("Could not post. Please try again.");
     }
   };
+
+  const toggleDisplayProfile = (author, authorId) => {
+    setSelectedAuthor(author);
+    setSelectedAuthorId(authorId);
+    setDisplayProfile((prevVal) => !prevVal);
+  };
+
+  const showProfile = displayProfile ? "show-profile" : "hide-profile";
 
   return (
     <div className="app-container">
@@ -94,8 +90,17 @@ export default function HomeFeed() {
           <div className="tweets-list">
             {posts.map((post) => (
               <div key={post._id} className="tweet">
-                <strong>{post.author?.nickname || "Unknown"}</strong>:{" "}
-                {post.content}
+                <a
+                  key={post._id + post.author._id}
+                  href="#"
+                  className="to-profile"
+                  onClick={() =>
+                    toggleDisplayProfile(post.author.nickname, post.author._id)
+                  }
+                >
+                  <strong>{post.author?.nickname || "Unknown"}</strong>
+                </a>
+                : {post.content}
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
@@ -122,6 +127,13 @@ export default function HomeFeed() {
           ))}
         </ul>
       </aside>
+
+      <UserProfile
+        className={showProfile}
+        onClose={() => setDisplayProfile(false)}
+        author={selectedAuthor}
+        authorId={selectedAuthorId}
+      />
     </div>
   );
 }
