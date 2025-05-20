@@ -138,3 +138,5 @@ const UsersProfile = () => {
     </>
   );
 };
+
+export default UsersProfile;
