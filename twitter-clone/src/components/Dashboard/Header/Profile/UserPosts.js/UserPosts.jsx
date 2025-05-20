@@ -4,7 +4,7 @@ import { profilePosts } from "../../../../../api/posts.js";
 import PostCard from "./PostCard";
 import "./userpostStyle.css";
 
-function UserPosts() {
+function UserPosts({ userId: propUserId }) {
   const { user } = useUser();
   const [loading, setloading] = useState(true);
   const [posts, setPosts] = useState([]);
