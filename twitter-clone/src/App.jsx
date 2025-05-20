@@ -7,10 +7,12 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Profile from "./components/Dashboard/Header/Profile/Profile";
 import UserSettings from "./components/Dashboard/Header/UserSettings/UserSettings";
+import UsersProfile from "./components/Dashboard/Header/Profile/UsersProfile";
 import "./App.css";
 
 function App() {
   return (
+  
     <Router>
       <UserProvider>
         <Routes>
@@ -40,6 +42,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <UserSettings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/users/:id"
+            element={
+              <ProtectedRoute>
+                <UsersProfile />
               </ProtectedRoute>
             }
           />
