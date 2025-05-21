@@ -1,7 +1,15 @@
-#user-settings {
-  height: 70vh;
+#settings-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#settings-content {
   display: flex;
   flex-direction: column;
+  height: 90%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
 }
 
 #to-dash {
@@ -40,4 +48,30 @@
 #update-info #save-button:hover {
   cursor: pointer;
   background-color: lightgrey;
+}
+
+.hide-updated-div {
+  display: none;
+}
+
+.user-updated {
+  position: absolute;
+  top: calc(50% - 150px);
+  height: 200px;
+  width: 300px;
+  font-size: 5em;
+  animation: fade 3s linear;
+}
+
+@keyframes fade {
+  0% {
+    background: rgba(255, 255, 255, 0.8);
+    color: green;
+    opacity: 1;
+  }
+  100% {
+    background: transparent;
+    color: transparent;
+    opacity: 0;
+  }
 }

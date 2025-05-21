@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "../Header";
+import Footer from "../../Footer/Footer";
 import UpdateInfoForm from "./updateForm";
 import "./SettingStyle.css";
 
@@ -16,6 +18,8 @@ function UserSettings() {
     website: "",
   });
   const navigate = useNavigate();
+
+  // console.log(userData);
 
   useEffect(() => {
     if (userData) {
@@ -60,34 +64,39 @@ function UserSettings() {
 
   return (
     <>
-      <div id="user-settings">
-        <>
-          {userData ? (
-            <div>
-              <h1>Manage user settings here</h1>
+      <div id="settings-container">
+        <Header />
+        <div id="settings-content">
+          <>
+            {userData ? (
               <div>
-                <UpdateInfoForm
-                  name={userInfo.name}
-                  nickname={userInfo.nickname}
-                  email={userInfo.email}
-                  hometown={userInfo.hometown}
-                  about={userInfo.about}
-                  occupation={userInfo.occupation}
-                  website={userInfo.website}
-                />
+                <h4>{`Signed up: ${userData.createdAt.split("T")[0]}`}</h4>
+                <div>
+                  <UpdateInfoForm
+                    id={userData._id}
+                    name={userInfo.name}
+                    nickname={userInfo.nickname}
+                    email={userInfo.email}
+                    hometown={userInfo.hometown}
+                    about={userInfo.about}
+                    occupation={userInfo.occupation}
+                    website={userInfo.website}
+                  />
+                </div>
               </div>
-            </div>
-          ) : (
-            <div>
-              <h2>Loading...</h2>
-              <i className="fa-solid fa-spinner fa-xl"></i>
-            </div>
-          )}
-        </>
+            ) : (
+              <div>
+                <h2>Loading...</h2>
+                <i className="fa-solid fa-spinner fa-xl"></i>
+              </div>
+            )}
+          </>
 
-        <Link to={"/dashboard"} id="to-dash">
-          &larr; Back
-        </Link>
+          <Link to={"/dashboard"} id="to-dash">
+            &larr; Back
+          </Link>
+        </div>
+        <Footer />
       </div>
     </>
   );

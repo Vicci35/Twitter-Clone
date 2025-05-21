@@ -1,20 +1,20 @@
 // Main page for authenticated user
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../utils/UserContext";
 import DashHeader from "./Header/Header";
 import HomeFeed from "../Home/Home";
 import Footer from "./Footer/Footer";
 import "./DashStyle.css";
 
 function Dashboard() {
-  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const { user, setUser } = useUser();
 
   useEffect(() => {
-    if (userData) {
-      console.log("UserData updated:", userData);
+    if (user) {
     }
-  }, [userData]);
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,14 +27,12 @@ function Dashboard() {
           },
         });
 
-        console.log(response);
-
         if (!response.ok) {
           throw new Error("Inte inloggad");
         }
 
         const data = await response.json();
-        setUserData(data.user);
+        setUser(data.user);
       } catch (err) {
         console.error(err);
         navigate("/login/password");
@@ -46,10 +44,10 @@ function Dashboard() {
 
   return (
     <>
-      {userData ? (
+      {user ? (
         <div id="dash-main-div">
           {/* HEADER */}
-          <DashHeader userName={userData.nickname} />
+          <DashHeader userName={user.nickname} />
 
 
           {/* MAIN CONTENT START */}
@@ -59,8 +57,7 @@ function Dashboard() {
           </div>
           {/* MAIN CONTENT END
 
-
-        {/* FOOTER */}
+            {/* FOOTER */}
           <Footer />
         </div>
       ) : (

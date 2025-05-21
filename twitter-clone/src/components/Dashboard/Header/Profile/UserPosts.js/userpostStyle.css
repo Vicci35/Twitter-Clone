@@ -1,0 +1,42 @@
+#activity-div {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 600px;
+  height: 245px;
+  border: 1px solid;
+  border-radius: 12px;
+}
+
+#followers {
+  border-right: 1px solid;
+  padding: 10px;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+#followers::-webkit-scrollbar {
+  display: none;
+}
+
+#followers h2,
+#user-posts h2 {
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
+
+#user-posts {
+  padding: 10px;
+  flex: 2;
+  overflow-y: scroll;
+}
+
+#user-posts::-webkit-scrollbar {
+  display: none;
+}
+
+.post-card {
+  border: 1px solid;
+  padding: 4px;
+  margin: 10px auto;
+}

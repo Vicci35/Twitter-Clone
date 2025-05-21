@@ -10,7 +10,6 @@
   margin-right: 2rem;
 }
 
-
 .main-feed h1 {
   text-align: start;
   color: black;
@@ -59,6 +58,11 @@ textarea {
   border-radius: 6px;
 }
 
+.to-profile {
+  text-decoration: none;
+  color: black;
+}
+
 .sidebar {
   flex: 1;
   background: #fafafa;
@@ -88,4 +92,20 @@ textarea {
   margin: 0.3rem 0;
   border-radius: 12px;
   display: inline-block;
+}
+
+/* Profile div */
+.show-profile {
+  width: 600px;
+  height: 700px;
+  position: absolute;
+  top: calc(50% - 350px);
+  left: calc(50% - 300px);
+  background-color: white;
+  border: 1px solid darkslategray;
+  border-radius: 12px;
+}
+
+.hide-profile {
+  display: none;
 }
