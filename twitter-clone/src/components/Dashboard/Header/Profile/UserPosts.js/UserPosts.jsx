@@ -11,7 +11,7 @@ function UserPosts({ userId: propUserId }) {
 
   const userId = propUserId || (user && user._id);
 
-  console.log(userId);
+  console.log("From UserPosts:", userId);
 
   useEffect(() => {
     if (!userId) return;
