@@ -56,10 +56,12 @@
 #activity-left {
   padding-top: 20px;
   flex: 1;
+  padding-right: 10px;
 }
 
 #activity-left p {
   color: black;
+  margin-top: 10px;
 }
 
 #activity-right {
