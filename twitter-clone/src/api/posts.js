@@ -22,7 +22,17 @@ async function createPost({ content, author }) {
 }
 
 async function profilePosts(id) {
-  const res = await fetch(`http://localhost:3000/api/posts/user/${id}`);
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:3000/api/posts/user/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.log("Error here");
+  }
 
   const data = await res.json();
   return data;
