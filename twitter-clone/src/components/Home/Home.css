@@ -110,3 +110,21 @@ textarea {
 .hide-profile {
   display: none;
 }
+
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 10px;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: white;
+}
+
+.pagination button:hover {
+  background: rgba(29, 161, 242, 0.3);
+}
