@@ -53,6 +53,7 @@ const UsersProfile = () => {
 
   const handleFollowToggle = async () => {
     const token = localStorage.getItem("token");
+
     const url = isFollowing
       ? "http://localhost:3000/api/unfollow"
       : "http://localhost:3000/api/follow";

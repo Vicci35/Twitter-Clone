@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
@@ -14,7 +15,7 @@ export default function HomeFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchWord, setSearchWord] = useState("");
-  const [displayProfile, setDisplayProfile] = useState(false);
+  // const [displayProfile, setDisplayProfile] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState("");
   const [selectedAuthorId, setSelectedAuthorId] = useState("");
 
@@ -54,10 +55,10 @@ export default function HomeFeed() {
   const toggleDisplayProfile = (author, authorId) => {
     setSelectedAuthor(author);
     setSelectedAuthorId(authorId);
-    setDisplayProfile((prevVal) => !prevVal);
+    // setDisplayProfile((prevVal) => !prevVal);
   };
 
-  const showProfile = displayProfile ? "show-profile" : "hide-profile";
+  // const showProfile = displayProfile ? "show-profile" : "hide-profile";
 
   return (
     <div className="app-container">
@@ -90,17 +91,29 @@ export default function HomeFeed() {
           <div className="tweets-list">
             {posts.map((post) => (
               <div key={post._id} className="tweet">
-                <a
+                <Link to={`/users/${post.author._id}`}>
+                  <strong
+                    key={post._id + post.author._id}
+                    className="to-profile"
+                    onClick={() =>
+                      toggleDisplayProfile(
+                        post.author.nickname,
+                        post.author._id
+                      )
+                    }
+                  >
+                    {post.author?.nickname || "Unknown"}
+                  </strong>
+                </Link>
+                {/* <a
+                  href={`/users/${post.author._id}`}
                   key={post._id + post.author._id}
-                  href="#"
                   className="to-profile"
                   onClick={() =>
                     toggleDisplayProfile(post.author.nickname, post.author._id)
                   }
-                >
-                  <strong>{post.author?.nickname || "Unknown"}</strong>
-                </a>
-                : {post.content}
+                > */}
+                {/* </a> */}: {post.content}
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
@@ -128,12 +141,12 @@ export default function HomeFeed() {
         </ul>
       </aside>
 
-      <UserProfile
+      {/* <UserProfile
         className={showProfile}
         onClose={() => setDisplayProfile(false)}
         author={selectedAuthor}
         authorId={selectedAuthorId}
-      />
+      /> */}
     </div>
   );
 }
