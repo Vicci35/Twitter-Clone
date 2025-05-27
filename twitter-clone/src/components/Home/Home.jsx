@@ -4,7 +4,6 @@ import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
 import { fetchAllPosts, createPost } from "../../api/posts";
-import UserProfile from "./UserProfile/UserProfile.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
 
@@ -15,9 +14,17 @@ export default function HomeFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchWord, setSearchWord] = useState("");
-  // const [displayProfile, setDisplayProfile] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState("");
   const [selectedAuthorId, setSelectedAuthorId] = useState("");
+
+  // Paginering
+  const [currentPage, setCurrentPage] = useState(1);
+  const postPerPage = 20;
+
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(posts.length / postPerPage);
 
   useEffect(() => {
     async function getSearch(searchTerm) {
@@ -55,10 +62,7 @@ export default function HomeFeed() {
   const toggleDisplayProfile = (author, authorId) => {
     setSelectedAuthor(author);
     setSelectedAuthorId(authorId);
-    // setDisplayProfile((prevVal) => !prevVal);
   };
-
-  // const showProfile = displayProfile ? "show-profile" : "hide-profile";
 
   return (
     <div className="app-container">
@@ -89,11 +93,13 @@ export default function HomeFeed() {
           <p>No posts yet. Be the first!</p>
         ) : (
           <div className="tweets-list">
-            {posts.map((post) => (
+            {currentPosts.map((post, index) => (
               <div key={post._id} className="tweet">
+                <span className="post-number">
+                  #{posts.length - (indexOfFirstPost + index)}
+                </span>{" "}
                 <Link to={`/users/${post.author._id}`}>
                   <strong
-                    key={post._id + post.author._id}
                     className="to-profile"
                     onClick={() =>
                       toggleDisplayProfile(
@@ -105,15 +111,7 @@ export default function HomeFeed() {
                     {post.author?.nickname || "Unknown"}
                   </strong>
                 </Link>
-                {/* <a
-                  href={`/users/${post.author._id}`}
-                  key={post._id + post.author._id}
-                  className="to-profile"
-                  onClick={() =>
-                    toggleDisplayProfile(post.author.nickname, post.author._id)
-                  }
-                > */}
-                {/* </a> */}: {post.content}
+                : {post.content}
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
@@ -121,6 +119,25 @@ export default function HomeFeed() {
             ))}
           </div>
         )}
+        <div className="pagination">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Föregående
+          </button>
+          <span>
+            Sida {currentPage} av {totalPages}
+          </span>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Nästa
+          </button>
+        </div>
       </div>
 
       <aside className="sidebar">
@@ -140,13 +157,6 @@ export default function HomeFeed() {
           ))}
         </ul>
       </aside>
-
-      {/* <UserProfile
-        className={showProfile}
-        onClose={() => setDisplayProfile(false)}
-        author={selectedAuthor}
-        authorId={selectedAuthorId}
-      /> */}
     </div>
   );
 }
