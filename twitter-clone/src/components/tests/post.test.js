@@ -15,4 +15,14 @@ describe('Post component', () => {
     expect(screen.getByTestId('post-author')).toHaveTextContent('@VT');
     expect(screen.getByTestId('post-date')).toBeInTheDocument();
   });
+
+  test('visar rätt författarnamn', () => {
+    render(<Post post={mockPost} />);
+    expect(screen.getByTestId('post-author')).toHaveTextContent('@VT');
+  });
+
+  test('visar datum', () => {
+    render(<Post post={mockPost} />);
+    expect(screen.getByTestId('post-date')).toBeInTheDocument();
+  });
 });
