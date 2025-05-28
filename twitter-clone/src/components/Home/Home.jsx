@@ -127,7 +127,7 @@ export default function HomeFeed() {
             Föregående
           </button>
           <span>
-            Sida {currentPage} av {totalPages}
+            Sida {currentPage} av {totalPages === 0 ? 1 : totalPages}
           </span>
           <button
             onClick={() =>
