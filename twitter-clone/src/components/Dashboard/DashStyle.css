@@ -48,6 +48,7 @@
   color: white;
 }
 
+
 .dropdown-container {
   position: relative;
   display: inline-block;
@@ -133,6 +134,7 @@
   cursor: pointer;
   background-color: lightgrey;
 }
+
 
 /* Main content styling  */
 #dash-content {
