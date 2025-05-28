@@ -4,6 +4,7 @@ import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
 import { fetchAllPosts, createPost } from "../../api/posts";
+import ProfilePic from "../Dashboard/Header/Profile/ProfileImg/ProfileImg.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
 
@@ -95,23 +96,22 @@ export default function HomeFeed() {
           <div className="tweets-list">
             {currentPosts.map((post, index) => (
               <div key={post._id} className="tweet">
-                <span className="post-number">
-                  #{posts.length - (indexOfFirstPost + index)}
-                </span>{" "}
-                <Link to={`/users/${post.author._id}`}>
-                  <strong
-                    className="to-profile"
-                    onClick={() =>
-                      toggleDisplayProfile(
-                        post.author.nickname,
-                        post.author._id
-                      )
-                    }
+                <div className="author-div">
+                  <span className="post-number">
+                    #{posts.length - (indexOfFirstPost + index)}
+                  </span>{" "}
+                  <Link
+                    to={`/users/${post.author._id}`}
+                    className="profile-link"
                   >
-                    {post.author?.nickname || "Unknown"}
-                  </strong>
-                </Link>
-                : {post.content}
+                    <ProfilePic id="profile-pic-small" />
+                    <strong className="to-profile">
+                      {post.author?.nickname || "Unknown"}
+                    </strong>
+                  </Link>
+                  :
+                </div>
+                <div>{post.content}</div>
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
