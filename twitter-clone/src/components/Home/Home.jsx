@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { io } from "socket.io-client";
 import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
@@ -7,6 +8,7 @@ import { fetchAllPosts, createPost } from "../../api/posts";
 import ProfilePic from "../Dashboard/Header/Profile/ProfileImg/ProfileImg.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
+const socket = io("http://localhost:3000");
 
 export default function HomeFeed() {
   const { user } = useUser();
@@ -26,6 +28,16 @@ export default function HomeFeed() {
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(posts.length / postPerPage);
+
+  useEffect(() => {
+    socket.on("tweetFromOtherUser", (newTweet) => {
+      setPosts((prevPosts) => [newTweet, ...prevPosts]);
+    });
+
+    return () => {
+      socket.off("tweetFromOtherUser");
+    };
+  }, []);
 
   useEffect(() => {
     async function getSearch(searchTerm) {
@@ -52,17 +64,13 @@ export default function HomeFeed() {
       });
 
       setPosts([newPost, ...posts]);
+      socket.emit("newTweet", newPost); // 🧠 detta är nytt!
       setContent("");
       setError("");
     } catch (err) {
       console.error(err);
       setError("Could not post. Please try again.");
     }
-  };
-
-  const toggleDisplayProfile = (author, authorId) => {
-    setSelectedAuthor(author);
-    setSelectedAuthorId(authorId);
   };
 
   return (
