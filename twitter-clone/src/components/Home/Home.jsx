@@ -28,19 +28,21 @@ export default function HomeFeed() {
   const totalPages = Math.ceil(posts.length / postPerPage);
 
   useEffect(() => {
-    async function getSearch(searchTerm) {
+    async function fetchFollowedFeed() {
       try {
-        const response = await searchPosts(searchTerm);
-        setPosts(response);
+        const data = await fetchAllPosts(user._id);
+        setPosts(data);
       } catch (err) {
-        console.error("Failed to load posts", err);
+        console.error("Failed to load followed feed", err);
       } finally {
         setLoading(false);
       }
     }
 
-    getSearch(searchWord);
-  }, [searchWord]);
+    if (user?._id && !searchWord) {
+      fetchFollowedFeed();
+    }
+  }, [user, searchWord]);
 
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
@@ -104,7 +106,7 @@ export default function HomeFeed() {
                     to={`/users/${post.author._id}`}
                     className="profile-link"
                   >
-                    <ProfilePic id="profile-pic-small" />
+                    <ProfilePic id="profile-pic-small" imageUrl={post.author?.profileImage}/>
                     <strong className="to-profile">
                       {post.author?.nickname || "Unknown"}
                     </strong>

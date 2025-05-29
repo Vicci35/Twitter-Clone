@@ -5,13 +5,17 @@ import { useEffect } from "react";
 import ProfilePic from "./ProfileImg/ProfileImg";
 import Header from "../Header";
 import Footer from "../../Footer/Footer";
-import UserPosts from "./UserPosts/UserPosts.jsx";
+
+import UserPosts from "../Profile/UserPosts/UserPosts";
+
 
 import "./profile.css";
 
 function Profile() {
   const { user } = useUser();
   const navigate = useNavigate();
+
+  console.log("Current user object:", user);
 
   useEffect(() => {
     if (!user) {
@@ -31,7 +35,7 @@ function Profile() {
           <div id="profile-card">
             <div id="profile-left" className="profile-div">
               {/* Fetch image from database? */}
-              <ProfilePic id="profile-pic" />
+              <ProfilePic imageUrl={user.profileImage} id="profile-pic" />
               <div id="name-div">
                 <h3>{user.name}</h3>
                 <p>{user.nickname}</p>
