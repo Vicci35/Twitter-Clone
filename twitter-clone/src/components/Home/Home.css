@@ -58,6 +58,29 @@ textarea {
   border-radius: 6px;
 }
 
+.tweet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.author-div {
+  display: flex;
+  align-items: center;
+}
+
+.timestamp {
+  margin-top: 10px;
+}
+
+.profile-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+
 .to-profile {
   text-decoration: none;
   color: black;
@@ -92,23 +115,6 @@ textarea {
   margin: 0.3rem 0;
   border-radius: 12px;
   display: inline-block;
-}
-
-/* Profile div */
-.show-profile {
-  width: 600px;
-  height: 700px;
-  position: absolute;
-  top: calc(50% - 350px);
-  left: calc(50% - 300px);
-  background-color: white;
-  border: 1px solid darkslategray;
-
-  border-radius: 12px;
-}
-
-.hide-profile {
-  display: none;
 }
 
 .pagination {
