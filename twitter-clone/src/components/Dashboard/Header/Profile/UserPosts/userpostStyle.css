@@ -19,6 +19,12 @@
   display: none;
 }
 
+.follower-link {
+  text-decoration: none;
+  font-size: 1.2em;
+  color: blue;
+}
+
 #followers h2,
 #user-posts h2 {
   text-decoration: underline;

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import ProfilePic from "./ProfileImg/ProfileImg";
 import Header from "../Header";
 import Footer from "../../Footer/Footer";
-import UserPosts from "./UserPosts.js/UserPosts";
+import UserPosts from "./UserPosts/UserPosts.jsx";
 import "./profile.css";
 
 function Profile() {
