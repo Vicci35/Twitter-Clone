@@ -23,7 +23,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock(
-  '../Dashboard/Header/Profile/UserPosts.js/UserPosts',
+  '../Dashboard/Header/Profile/UserPosts/UserPosts',
   () => () => <div data-testid="user-posts-mock">UserPosts Mock</div>
 );
 
