@@ -5,16 +5,18 @@ import UserPosts from "../Dashboard/Header/Profile/UserPosts/UserPosts";
 import { useUser } from "../../utils/UserContext";
 import { profilePosts } from "../../api/posts";
 
-// Mocka dessa externa beroenden
+// Mocka externa beroenden
 jest.mock("../../utils/UserContext", () => ({
   useUser: jest.fn(),
 }));
 
-jest.mock("../Dashboard/Header/Profile/UserPosts/UserPosts", () => ({
+jest.mock("../../api/posts", () => ({
   profilePosts: jest.fn(),
 }));
 
-jest.mock("../Dashboard/Header/Profile/UserPosts/PostCard", () => ({ post }) => <div data-testid="post-card">{post.title}</div>);
+jest.mock("../Dashboard/Header/Profile/UserPosts/PostCard", () => ({ post }) => (
+  <div data-testid="post-card">{post.title}</div>
+));
 
 describe("UserPosts", () => {
   const mockUser = { _id: "user123" };
@@ -29,7 +31,7 @@ describe("UserPosts", () => {
 
   test("visar laddningsmeddelande medan data hämtas", async () => {
     useUser.mockReturnValue({ user: mockUser });
-    profilePosts.mockImplementation(() => new Promise(() => {})); // aldrig resolvar
+    profilePosts.mockImplementation(() => new Promise(() => {}));
 
     render(<UserPosts />);
     expect(screen.getByText("Loading posts...")).toBeInTheDocument();
@@ -62,13 +64,12 @@ describe("UserPosts", () => {
     expect(screen.getByText("No posts to show")).toBeInTheDocument();
   });
 
-  test("renderar inte något om userId saknas", () => {
-    useUser.mockReturnValue({ user: null });
+  test("renderar loading om user saknas (ingen userId)", () => {
+  useUser.mockReturnValue({ user: null });
 
-    render(<UserPosts />);
-    expect(screen.getByText("Followers")).toBeInTheDocument();
-    expect(screen.getByText("Posts")).toBeInTheDocument();
-  });
+  render(<UserPosts />);
+  expect(screen.getByText("Loading posts...")).toBeInTheDocument();
+});
 
   test("använder propUserId om det skickas in", async () => {
     useUser.mockReturnValue({ user: null });

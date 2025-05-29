@@ -4,12 +4,12 @@ import UsersProfile from "../Dashboard/Header/Profile/UsersProfile.jsx"
 import { MemoryRouter } from 'react-router-dom';
 import { useUser } from '../../utils/UserContext.jsx';
 
-// Mocka useUser-hook
+
 jest.mock('../../utils/UserContext.jsx', () => ({
   useUser: () => ({ user: { _id: 'user123' } }),
 }));
 
-// Mocka react-router-dom
+
 jest.mock('react-router-dom', () => {
   const actual = jest.requireActual('react-router-dom');
   return {
