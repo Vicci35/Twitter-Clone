@@ -49,6 +49,7 @@ function Dashboard() {
           {/* HEADER */}
           <DashHeader userName={user.nickname} />
 
+
           {/* MAIN CONTENT START */}
           <div id="dash-content">
             <HomeFeed />

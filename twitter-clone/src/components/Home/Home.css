@@ -10,7 +10,6 @@
   margin-right: 2rem;
 }
 
-
 .main-feed h1 {
   text-align: start;
   color: black;
@@ -59,6 +58,34 @@ textarea {
   border-radius: 6px;
 }
 
+.tweet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.author-div {
+  display: flex;
+  align-items: center;
+}
+
+.timestamp {
+  margin-top: 10px;
+}
+
+.profile-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+
+.to-profile {
+  text-decoration: none;
+  color: black;
+}
+
 .sidebar {
   flex: 1;
   background: #fafafa;
@@ -88,4 +115,22 @@ textarea {
   margin: 0.3rem 0;
   border-radius: 12px;
   display: inline-block;
+}
+
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 10px;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: white;
+}
+
+.pagination button:hover {
+  background: rgba(29, 161, 242, 0.3);
 }

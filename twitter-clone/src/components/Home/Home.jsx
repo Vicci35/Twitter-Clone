@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Home.css";
 import { useUser } from "../../utils/UserContext";
+import { searchPosts } from "../../controllers/searchController.js";
 import { fetchAllPosts, createPost } from "../../api/posts";
+import ProfilePic from "../Dashboard/Header/Profile/ProfileImg/ProfileImg.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
 
@@ -11,21 +14,33 @@ export default function HomeFeed() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchWord, setSearchWord] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+  const [selectedAuthorId, setSelectedAuthorId] = useState("");
+
+  // Paginering
+  const [currentPage, setCurrentPage] = useState(1);
+  const postPerPage = 20;
+
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(posts.length / postPerPage);
 
   useEffect(() => {
-    const loadPosts = async () => {
+    async function getSearch(searchTerm) {
       try {
-        const data = await fetchAllPosts();
-        setPosts(data);
+        const response = await searchPosts(searchTerm);
+        setPosts(response);
       } catch (err) {
         console.error("Failed to load posts", err);
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    if (user) loadPosts();
-  }, [user]);
+    getSearch(searchWord);
+  }, [searchWord]);
 
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
@@ -43,6 +58,11 @@ export default function HomeFeed() {
       console.error(err);
       setError("Could not post. Please try again.");
     }
+  };
+
+  const toggleDisplayProfile = (author, authorId) => {
+    setSelectedAuthor(author);
+    setSelectedAuthorId(authorId);
   };
 
   return (
@@ -74,10 +94,24 @@ export default function HomeFeed() {
           <p>No posts yet. Be the first!</p>
         ) : (
           <div className="tweets-list">
-            {posts.map((post) => (
+            {currentPosts.map((post, index) => (
               <div key={post._id} className="tweet">
-                <strong>{post.author?.nickname || "Unknown"}</strong>:{" "}
-                {post.content}
+                <div className="author-div">
+                  <span className="post-number">
+                    #{posts.length - (indexOfFirstPost + index)}
+                  </span>{" "}
+                  <Link
+                    to={`/users/${post.author._id}`}
+                    className="profile-link"
+                  >
+                    <ProfilePic id="profile-pic-small" />
+                    <strong className="to-profile">
+                      {post.author?.nickname || "Unknown"}
+                    </strong>
+                  </Link>
+                  :
+                </div>
+                <div>{post.content}</div>
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
@@ -85,6 +119,25 @@ export default function HomeFeed() {
             ))}
           </div>
         )}
+        <div className="pagination">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Föregående
+          </button>
+          <span>
+            Sida {currentPage} av {totalPages === 0 ? 1 : totalPages}
+          </span>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Nästa
+          </button>
+        </div>
       </div>
 
       <aside className="sidebar">
@@ -92,6 +145,8 @@ export default function HomeFeed() {
           type="text"
           placeholder="Sök hashtags eller personer"
           className="search-input"
+          value={searchWord}
+          onChange={(e) => setSearchWord(e.target.value)}
         />
         <h3>Trendar bland de du följer</h3>
         <ul className="trending-list">

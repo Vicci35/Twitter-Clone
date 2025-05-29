@@ -1,6 +1,8 @@
+import React from "react";
 import { useUser } from "../../../../utils/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import ProfilePic from "./ProfileImg/ProfileImg";
 import Header from "../Header";
 import Footer from "../../Footer/Footer";
 import UserPosts from "./UserPosts.js/UserPosts";
@@ -28,11 +30,7 @@ function Profile() {
           <div id="profile-card">
             <div id="profile-left" className="profile-div">
               {/* Fetch image from database? */}
-              <img
-                id="profile-pic"
-                src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg"
-                alt="anonymous"
-              />
+              <ProfilePic id="profile-pic" />
               <div id="name-div">
                 <h3>{user.name}</h3>
                 <p>{user.nickname}</p>
