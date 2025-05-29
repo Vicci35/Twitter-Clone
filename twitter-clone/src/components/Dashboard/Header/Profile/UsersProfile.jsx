@@ -1,10 +1,11 @@
+import React from "react";
 import { useUser } from "../../../../utils/UserContext";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import Header from "../Header";
 import Footer from "../../Footer/Footer";
 import "./profile.css";
-import UserPosts from "./UserPosts.js/UserPosts";
+import UserPosts from "./UserPosts/UserPosts";
 
 const UsersProfile = () => {
   const { id } = useParams();

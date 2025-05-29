@@ -1,7 +1,8 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { useUser } from "../../../../../utils/UserContext.jsx";
 import { profilePosts } from "../../../../../api/posts.js";
-import PostCard from "./PostCard";
+import PostCard from "./PostCard.jsx";
 import "./userpostStyle.css";
 
 function UserPosts({ userId: propUserId }) {
