@@ -1,5 +1,5 @@
-async function fetchAllPosts() {
-  const res = await fetch("http://localhost:3000/api/posts/feed");
+async function fetchAllPosts(userId) {
+  const res = await fetch(`http://localhost:3000/api/posts/feed/following/${userId}`);
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
   }
