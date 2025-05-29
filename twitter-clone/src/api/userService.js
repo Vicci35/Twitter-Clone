@@ -41,3 +41,40 @@ export async function getProfileInfo(id) {
   const data = await resp.json();
   return data;
 }
+
+//Update user profile picture
+export async function updateUserWithImage(id, updatedInfo, profileImage) {
+  const token = localStorage.getItem("token");
+
+  const formData = new FormData();
+  formData.append("name", updatedInfo.changeName);
+  formData.append("nickname", updatedInfo.changeNick);
+  formData.append("email", updatedInfo.changeMail);
+  formData.append("hometown", updatedInfo.hometown);
+  formData.append("about", updatedInfo.changeAbout);
+  formData.append("occupation", updatedInfo.changeOccupation);
+  formData.append("website", updatedInfo.changeWebsite);
+
+  if (profileImage) {
+    formData.append("profileImage", profileImage);
+  }
+
+  const resp = await fetch(`http://localhost:3000/api/users/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  
+  console.log("Response status:", resp.status, resp.statusText);
+
+  if (!resp.ok) {
+    throw new Error("Updated failed");
+  }
+
+  const data = await resp.json();
+
+  return data;
+}

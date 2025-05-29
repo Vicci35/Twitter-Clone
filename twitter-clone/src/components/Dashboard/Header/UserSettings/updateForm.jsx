@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { updateUserInfo } from "../../../../api/userService.js";
+import { updateUserWithImage } from "../../../../api/userService.js";
 
 function UpdateInfoForm({
   id,
@@ -21,6 +22,7 @@ function UpdateInfoForm({
     changeWebsite: website,
   });
   const [showUpdateMsg, setshowUpdateMsg] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
   // Make sure all fields in updateInfo gets the value from props
   useEffect(() => {
@@ -53,7 +55,7 @@ function UpdateInfoForm({
   async function handleUpdate(e) {
     e.preventDefault();
     try {
-      const data = await updateUserInfo(updatedInfo);
+      const data = await updateUserWithImage(id, updatedInfo, profileImage);
       if (data.ok) {
         setshowUpdateMsg(true);
       }
@@ -66,6 +68,10 @@ function UpdateInfoForm({
 
   return (
     <form id="update-info" onSubmit={handleUpdate}>
+
+      <label htmlFor="profileImage">Profile Image:</label>
+      <input type="file" accept="image/*" onChange={(e) => setProfileImage(e.target.files[0])} />
+
       <label htmlFor="changeName">Name:</label>
       <input
         type="text"

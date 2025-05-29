@@ -104,7 +104,7 @@ export default function HomeFeed() {
                     to={`/users/${post.author._id}`}
                     className="profile-link"
                   >
-                    <ProfilePic id="profile-pic-small" />
+                    <ProfilePic id="profile-pic-small" imageUrl={post.author?.profileImage}/>
                     <strong className="to-profile">
                       {post.author?.nickname || "Unknown"}
                     </strong>
