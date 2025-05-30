@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
+
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../../utils/UserContext";
 
@@ -32,6 +32,8 @@ function DashHeader({ userName }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const profileImg = user?.profileImage ? `http://localhost:3000/${user.profileImage}` : "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg"
 
   return (
     <div className="header">
