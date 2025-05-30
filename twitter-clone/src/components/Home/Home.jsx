@@ -31,12 +31,6 @@ export default function HomeFeed() {
   const totalPages = Math.ceil(posts.length / postPerPage);
 
   useEffect(() => {
-<<<<<<< HEAD
-    async function fetchFollowedFeed() {
-      try {
-        const data = await fetchAllPosts(user._id);
-        setPosts(data);
-=======
     socket.on("tweetFromOtherUser", (newTweet) => {
       setPosts((prevPosts) => [newTweet, ...prevPosts]);
     });
@@ -68,7 +62,6 @@ export default function HomeFeed() {
           const response = await searchPosts(searchTerm);
           setPosts(response);
         }
->>>>>>> Sebastian
       } catch (err) {
         console.error("Failed to load followed feed", err);
       } finally {
@@ -76,15 +69,8 @@ export default function HomeFeed() {
       }
     }
 
-<<<<<<< HEAD
-    if (user?._id && !searchWord) {
-      fetchFollowedFeed();
-    }
-  }, [user, searchWord]);
-=======
     getSearch(searchWord);
   }, [searchWord, followersOnly]);
->>>>>>> Sebastian
 
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
@@ -144,7 +130,10 @@ export default function HomeFeed() {
                     to={`/users/${post.author._id}`}
                     className="profile-link"
                   >
-                    <ProfilePic id="profile-pic-small" imageUrl={post.author?.profileImage}/>
+                    <ProfilePic
+                      id="profile-pic-small"
+                      imageUrl={post.author?.profileImage}
+                    />
                     <strong className="to-profile">
                       {post.author?.nickname || "Unknown"}
                     </strong>
