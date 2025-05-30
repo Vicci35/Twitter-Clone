@@ -1,31 +1,50 @@
-import React from "react";
 import { useUser } from "../../../../utils/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import ProfilePic from "./ProfileImg/ProfileImg";
+import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../../Footer/Footer";
-
 import UserPosts from "../Profile/UserPosts/UserPosts";
-
-
 import "./profile.css";
 
 function Profile() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
-
-  console.log("Current user object:", user);
+  const [loading, setLoading] = useState(true);
+  const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
     if (!user) {
       navigate("/login/password");
+      return;
     }
-  }, [user]);
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
+    const fetchProfile = async () => {
+      try{
+        const res = await fetch(`http://localhost:3000/api/users/${user._id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProfileData(data);
+          setUser(data);
+        } else {
+          console.error("Could not fetch profile");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [user, navigate, setUser]);
+
+  if (loading) return <p>Loading profile...</p>;
+  if (!profileData) return <p>Profile not found</p>;
+
+   const imageUrl = profileData.profileImage
+    ? `http://localhost:3000/${profileData.profileImage}`
+    : "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg";
+
 
   return (
     <>
@@ -35,31 +54,35 @@ function Profile() {
           <div id="profile-card">
             <div id="profile-left" className="profile-div">
               {/* Fetch image from database? */}
-              <ProfilePic imageUrl={user.profileImage} id="profile-pic" />
+              <img
+                id="profile-pic"
+                src={imageUrl}
+                alt="Profile"
+              />
               <div id="name-div">
-                <h3>{user.name}</h3>
-                <p>{user.nickname}</p>
+                <h3>{profileData.name}</h3>
+                <p>{profileData.nickname}</p>
               </div>
             </div>
 
             <div id="profile-right" className="profile-div">
               <div className="info-row">
-                <span className="profile-icon"> 💬</span> {user.about}
+                <span className="profile-icon"> 💬</span> {profileData.about}
               </div>
               <div className="info-row">
-                <span className="profile-icon">🏠 </span> {user.hometown}
+                <span className="profile-icon">🏠 </span> {profileData.hometown}
               </div>
               <div className="info-row">
                 <span className="profile-icon">💼 </span>
-                {user.occupation}
+                {profileData.occupation}
               </div>
               <div className="info-row">
                 <span className="profile-icon">📧 </span>
-                {user.email}
+                {profileData.email}
               </div>
               <div className="info-row">
                 <span className="profile-icon">🌐</span>
-                <a href="#">{user.website}</a>
+                <a href="#">{profileData.website}</a>
               </div>
             </div>
           </div>

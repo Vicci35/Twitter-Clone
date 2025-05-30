@@ -6,8 +6,12 @@ import Header from "../Header";
 import Footer from "../../Footer/Footer";
 import "./profile.css";
 import UserPosts from "./UserPosts/UserPosts";
+import ProfilePic from "../Profile/ProfileImg/ProfileImg"
 
 const UsersProfile = () => {
+
+  console.log("✅ UsersProfile component loaded");
+
   const { id } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
@@ -91,11 +95,7 @@ const UsersProfile = () => {
         <div id="profile-content">
           <div id="profile-card">
             <div id="profile-left" className="profile-div">
-              <img
-                id="profile-pic"
-                src="https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg"
-                alt="anonymous"
-              />
+              <ProfilePic id="profile-pic" imageUrl={usersProfile.profileImage} />
               <div id="name-div">
                 <h3>{usersProfile.name}</h3>
                 <p>{usersProfile.nickname}</p>
