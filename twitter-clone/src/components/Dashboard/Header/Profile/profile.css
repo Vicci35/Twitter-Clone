@@ -37,13 +37,15 @@
   height: 200px;
   border-radius: 50%;
   margin: auto;
+  object-fit: cover;
 }
 
 #profile-pic-small {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin: auto;
+  margin: auto 5px;
+  object-fit: cover;
 }
 
 #profile-left {
