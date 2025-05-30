@@ -17,6 +17,7 @@ export default function HomeFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchWord, setSearchWord] = useState("");
+  const [followersOnly, setFollowersOnly] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState("");
   const [selectedAuthorId, setSelectedAuthorId] = useState("");
 
@@ -39,11 +40,28 @@ export default function HomeFeed() {
     };
   }, []);
 
+  // ⚠️ This logic is finalized and working as intended
   useEffect(() => {
     async function getSearch(searchTerm) {
       try {
-        const response = await searchPosts(searchTerm);
-        setPosts(response);
+        if (followersOnly) {
+          const token = localStorage.getItem("token");
+
+          const resp = await fetch(
+            `http://localhost:3000/api/posts/feed/following/${user._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await resp.json();
+          console.log(data);
+          setPosts(data);
+        } else {
+          const response = await searchPosts(searchTerm);
+          setPosts(response);
+        }
       } catch (err) {
         console.error("Failed to load posts", err);
       } finally {
@@ -52,7 +70,7 @@ export default function HomeFeed() {
     }
 
     getSearch(searchWord);
-  }, [searchWord]);
+  }, [searchWord, followersOnly]);
 
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
@@ -64,7 +82,7 @@ export default function HomeFeed() {
       });
 
       setPosts([newPost, ...posts]);
-      socket.emit("newTweet", newPost); // 🧠 detta är nytt!
+      socket.emit("newTweet", newPost);
       setContent("");
       setError("");
     } catch (err) {
@@ -148,23 +166,35 @@ export default function HomeFeed() {
         </div>
       </div>
 
-      <aside className="sidebar">
-        <input
-          type="text"
-          placeholder="Sök hashtags eller personer"
-          className="search-input"
-          value={searchWord}
-          onChange={(e) => setSearchWord(e.target.value)}
-        />
-        <h3>Trendar bland de du följer</h3>
-        <ul className="trending-list">
-          {trendingHashtags.map((tag, index) => (
-            <li key={index} className="hashtag">
-              {tag}
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <div className="aside-div">
+        <aside className="sidebar">
+          <input
+            type="text"
+            placeholder="Sök hashtags eller personer"
+            className="search-input"
+            value={searchWord}
+            onChange={(e) => setSearchWord(e.target.value)}
+          />
+          <h3>Trendar bland de du följer</h3>
+          <ul className="trending-list">
+            {trendingHashtags.map((tag, index) => (
+              <li key={index} className="hashtag">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        <div>
+          <input
+            type="checkbox"
+            id="followers-only"
+            checked={followersOnly}
+            onChange={() => setFollowersOnly((prevVal) => !prevVal)}
+          />
+          <label htmlFor="followers-only">Show following only</label>
+        </div>
+      </div>
     </div>
   );
 }
