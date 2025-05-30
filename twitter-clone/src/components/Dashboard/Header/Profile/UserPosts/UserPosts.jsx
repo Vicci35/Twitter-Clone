@@ -53,7 +53,11 @@ function UserPosts({ userId: propUserId }) {
   }, [userId]);
 
   useEffect(() => {
-    console.log("Followers:", followers);
+    if (followers.length > 0) {
+      console.log("Followers:", followers);
+    } else {
+      console.log("No followers yet");
+    }
   }, [followers]);
 
   return (

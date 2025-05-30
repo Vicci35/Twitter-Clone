@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { io } from "socket.io-client";
 import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
@@ -7,6 +8,7 @@ import { fetchAllPosts, createPost } from "../../api/posts";
 import ProfilePic from "../Dashboard/Header/Profile/ProfileImg/ProfileImg.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
+const socket = io("http://localhost:3000");
 
 export default function HomeFeed() {
   const { user } = useUser();
@@ -15,6 +17,7 @@ export default function HomeFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchWord, setSearchWord] = useState("");
+  const [followersOnly, setFollowersOnly] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState("");
   const [selectedAuthorId, setSelectedAuthorId] = useState("");
 
@@ -28,10 +31,44 @@ export default function HomeFeed() {
   const totalPages = Math.ceil(posts.length / postPerPage);
 
   useEffect(() => {
+<<<<<<< HEAD
     async function fetchFollowedFeed() {
       try {
         const data = await fetchAllPosts(user._id);
         setPosts(data);
+=======
+    socket.on("tweetFromOtherUser", (newTweet) => {
+      setPosts((prevPosts) => [newTweet, ...prevPosts]);
+    });
+
+    return () => {
+      socket.off("tweetFromOtherUser");
+    };
+  }, []);
+
+  // ⚠️ This logic is finalized and working as intended
+  useEffect(() => {
+    async function getSearch(searchTerm) {
+      try {
+        if (followersOnly) {
+          const token = localStorage.getItem("token");
+
+          const resp = await fetch(
+            `http://localhost:3000/api/posts/feed/following/${user._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await resp.json();
+          console.log(data);
+          setPosts(data);
+        } else {
+          const response = await searchPosts(searchTerm);
+          setPosts(response);
+        }
+>>>>>>> Sebastian
       } catch (err) {
         console.error("Failed to load followed feed", err);
       } finally {
@@ -39,10 +76,15 @@ export default function HomeFeed() {
       }
     }
 
+<<<<<<< HEAD
     if (user?._id && !searchWord) {
       fetchFollowedFeed();
     }
   }, [user, searchWord]);
+=======
+    getSearch(searchWord);
+  }, [searchWord, followersOnly]);
+>>>>>>> Sebastian
 
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
@@ -54,17 +96,13 @@ export default function HomeFeed() {
       });
 
       setPosts([newPost, ...posts]);
+      socket.emit("newTweet", newPost);
       setContent("");
       setError("");
     } catch (err) {
       console.error(err);
       setError("Could not post. Please try again.");
     }
-  };
-
-  const toggleDisplayProfile = (author, authorId) => {
-    setSelectedAuthor(author);
-    setSelectedAuthorId(authorId);
   };
 
   return (
@@ -142,23 +180,35 @@ export default function HomeFeed() {
         </div>
       </div>
 
-      <aside className="sidebar">
-        <input
-          type="text"
-          placeholder="Sök hashtags eller personer"
-          className="search-input"
-          value={searchWord}
-          onChange={(e) => setSearchWord(e.target.value)}
-        />
-        <h3>Trendar bland de du följer</h3>
-        <ul className="trending-list">
-          {trendingHashtags.map((tag, index) => (
-            <li key={index} className="hashtag">
-              {tag}
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <div className="aside-div">
+        <aside className="sidebar">
+          <input
+            type="text"
+            placeholder="Sök hashtags eller personer"
+            className="search-input"
+            value={searchWord}
+            onChange={(e) => setSearchWord(e.target.value)}
+          />
+          <h3>Trendar bland de du följer</h3>
+          <ul className="trending-list">
+            {trendingHashtags.map((tag, index) => (
+              <li key={index} className="hashtag">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        <div>
+          <input
+            type="checkbox"
+            id="followers-only"
+            checked={followersOnly}
+            onChange={() => setFollowersOnly((prevVal) => !prevVal)}
+          />
+          <label htmlFor="followers-only">Show following only</label>
+        </div>
+      </div>
     </div>
   );
 }
