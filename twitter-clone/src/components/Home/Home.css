@@ -135,7 +135,6 @@ textarea {
   background: rgba(29, 161, 242, 0.3);
 }
 
-/* Dölj standardutseendet */
 input[type="checkbox"]#followers-only {
   appearance: none;
   -webkit-appearance: none;
@@ -149,7 +148,6 @@ input[type="checkbox"]#followers-only {
   transition: background-color 0.3s ease;
 }
 
-/* Slider-knappen */
 input[type="checkbox"]#followers-only::before {
   content: "";
   position: absolute;
@@ -163,12 +161,26 @@ input[type="checkbox"]#followers-only::before {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* När ikryssad */
 input[type="checkbox"]#followers-only:checked {
   background-color: #007bff;
 }
 
-/* Flytta knappen vid "checked" */
 input[type="checkbox"]#followers-only:checked::before {
   transform: translateX(35px);
+}
+
+.submit-comment {
+  width: 200px;
+  margin: 10px;
+}
+
+.comment {
+  border: 1px solid;
+  border-radius: 12px;
+  margin: 3px auto;
+  padding: 8px;
+}
+
+.comment-content {
+  margin: 5px auto;
 }
