@@ -18,7 +18,7 @@ const LoginStep1 = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: inputValue }),
+        body: JSON.stringify({ identifier: inputValue }),
       });
 
       if (!res.ok) {
@@ -27,7 +27,7 @@ const LoginStep1 = () => {
         return;
       }
 
-      navigate("/login/password", { state: { email: inputValue } });
+      navigate("/login/password", { state: { identifier: inputValue } });
     } catch (error) {
       setError("Serverfel - Försök igen.");
     }

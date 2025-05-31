@@ -6,14 +6,14 @@ const LogInStep2 = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (location.state?.email) {
-      setEmail(location.state.email);
+    if (location.state?.identifier) {
+      setIdentifier(location.state.identifier);
     }
   }, [location.state]);
 
@@ -27,7 +27,7 @@ const LogInStep2 = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ identifier, password }),
       });
 
       const data = await response.json();
@@ -53,9 +53,9 @@ const LogInStep2 = () => {
       <form onSubmit={handleLogin} className="login-form">
         <input
           type="text"
-          placeholder="E-post"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="E-post eller användarnamn"
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
         />
         <br />
         <br />
