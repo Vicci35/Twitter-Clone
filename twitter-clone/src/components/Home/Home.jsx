@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import "./Home.css";
 import { useUser } from "../../utils/UserContext";
 import { searchPosts } from "../../controllers/searchController.js";
-import { fetchAllPosts, createPost } from "../../api/posts";
+import { fetchAllPosts, createPost, createComment } from "../../api/posts";
 import ProfilePic from "../Dashboard/Header/Profile/ProfileImg/ProfileImg.jsx";
 
 const trendingHashtags = ["#Crypto", "#China", "#React", "#OpenAI", "#Travel"];
@@ -20,6 +20,9 @@ export default function HomeFeed() {
   const [followersOnly, setFollowersOnly] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState("");
   const [selectedAuthorId, setSelectedAuthorId] = useState("");
+
+  //comments
+  const [commentInputs, setCommentInputs] = useState({});
 
   // Paginering
   const [currentPage, setCurrentPage] = useState(1);
@@ -144,6 +147,37 @@ export default function HomeFeed() {
                 <div className="timestamp">
                   {new Date(post.createdAt).toLocaleString()}
                 </div>
+                {/* Comment form */}
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const comment = commentInputs[post._id];
+                    if (!comment || !comment.trim()) return;
+
+                    try {
+                      const updatedPost = await createComment(post._id, comment, user._id);
+                      setPosts((prev) =>
+                        prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
+                      );
+                      setCommentInputs((prev) => ({ ...prev, [post._id]: "" }));
+                    } catch (err) {
+                      console.error("Failed to post comment", err);
+                    }
+                  }}
+                  style={{ marginTop: "8px" }}
+                >
+
+                  <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    value={commentInputs[post._id] || ""}
+                    onChange={(e) =>
+                      setCommentInputs((prev) => ({ ...prev, [post._id]: e.target.value }))
+                    }
+                    style={{ width: "70%", marginRight: "8px" }}
+                  />
+                  <button type="submit">Comment</button>
+                </form>
               </div>
             ))}
           </div>
