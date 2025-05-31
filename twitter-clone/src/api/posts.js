@@ -38,4 +38,20 @@ async function profilePosts(id) {
   return data;
 }
 
-export { fetchAllPosts, createPost, profilePosts };
+async function createComment(postId, content, userId) {
+  const res = await fetch(`http://localhost:3000/api/posts/${postId}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ content, userId }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to add comment");
+  }
+
+  return res.json();
+}
+
+export { fetchAllPosts, createPost, profilePosts, createComment };
