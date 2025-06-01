@@ -75,6 +75,32 @@ export default function HomeFeed() {
     getSearch(searchWord);
   }, [searchWord, followersOnly]);
 
+  useEffect(() => {
+  async function doSearch() {
+    if (searchWord.trim() === "") {
+      try {
+        const data = await fetchAllPosts(user._id);
+        setPosts(data);
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    }
+
+    try {
+      const results = await searchPosts(searchWord);
+      setPosts(results);
+    } catch (err) {
+      console.error("Search failed", err);
+      setPosts([]);
+    }
+  }
+
+  if (searchWord) {
+    doSearch();
+  }
+}, [searchWord, user]);
+
   const handleTweet = async () => {
     if (!content.trim() || content.length > 140) return;
 

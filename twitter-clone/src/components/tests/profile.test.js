@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Profile from '../Dashboard/Header/Profile/Profile';
 
 const mockUser = {
+  _id: "123",
   name: 'VT',
   nickname: 'vt123',
   about: 'Testar profilkomponent',
@@ -12,8 +13,10 @@ const mockUser = {
   website: 'https://example.com',
 };
 
+const mockSetUser = jest.fn();
+
 jest.mock('../../utils/UserContext', () => ({
-  useUser: () => ({ user: mockUser }),
+  useUser: () => ({ user: mockUser, setUser: mockSetUser }),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -27,10 +30,24 @@ jest.mock(
   () => () => <div data-testid="user-posts-mock">UserPosts Mock</div>
 );
 
+beforeAll(() => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(mockUser),
+    })
+  );
+});
+
+afterAll(() => {
+  global.fetch.mockClear();
+  delete global.fetch;
+});
+
 describe('Profile component', () => {
-  test('visar användarens profilinfo', () => {
+  test('visar användarens profilinfo', async () => {
     render(<Profile />);
-    expect(screen.getByText(mockUser.name)).toBeInTheDocument();
+    expect(await screen.findByText(mockUser.name)).toBeInTheDocument();
     expect(screen.getByText(mockUser.nickname)).toBeInTheDocument();
     expect(screen.getByText(mockUser.about)).toBeInTheDocument();
     expect(screen.getByText(mockUser.hometown)).toBeInTheDocument();
@@ -39,8 +56,8 @@ describe('Profile component', () => {
     expect(screen.getByText(mockUser.website)).toBeInTheDocument();
   });
 
- test('renderar UserPosts komponenten', () => {
+ test('renderar UserPosts komponenten', async () => {
     render(<Profile />);
-    expect(screen.getByTestId('user-posts-mock')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('user-posts-mock')).toBeInTheDocument());
   });
 });

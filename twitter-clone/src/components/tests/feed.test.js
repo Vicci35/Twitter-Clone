@@ -3,14 +3,14 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import HomeFeed from '../Home/Home';
 import { useUser } from '../../utils/UserContext';
-import * as searchController from '../../controllers/searchController';
+import * as postApi from '../../api/posts';
 
 jest.mock('../../utils/UserContext', () => ({
   useUser: jest.fn(),
 }));
 
-jest.mock('../../controllers/searchController.js', () => ({
-  searchPosts: jest.fn(),
+jest.mock('../../api/posts', () => ({
+  fetchAllPosts: jest.fn(),
 }));
 
 
@@ -35,7 +35,7 @@ describe('feed component', () => {
       },
     ];
 
-    searchController.searchPosts.mockResolvedValue(mockPosts);
+    postApi.fetchAllPosts.mockResolvedValue(mockPosts);
 
      render(
       <MemoryRouter>
@@ -50,7 +50,7 @@ describe('feed component', () => {
   });
 
    test('visar meddelande om inga poster finns', async () => {
-    searchController.searchPosts.mockResolvedValue([]); 
+    postApi.fetchAllPosts.mockResolvedValue([]); 
 
     render(
       <MemoryRouter>
@@ -69,9 +69,13 @@ describe('feed component', () => {
       resolvePosts = resolve;
     });
 
-    searchController.searchPosts.mockReturnValue(postsPromise);
+    postApi.fetchAllPosts.mockReturnValue(postsPromise);
 
-    render(<HomeFeed />);
+     render(
+      <MemoryRouter>
+        <HomeFeed />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText(/Loading posts.../)).toBeInTheDocument();
 
