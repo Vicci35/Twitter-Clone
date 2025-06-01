@@ -10,8 +10,6 @@ import ProfilePic from "../Profile/ProfileImg/ProfileImg"
 
 const UsersProfile = () => {
 
-  console.log("✅ UsersProfile component loaded");
-
   const { id } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
