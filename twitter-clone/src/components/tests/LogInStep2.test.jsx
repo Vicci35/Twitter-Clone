@@ -17,7 +17,7 @@ test("kan logga in och spara token", async () => {
     </MemoryRouter>
   );
 
-  fireEvent.change(screen.getByPlaceholderText("E-post"), {
+  fireEvent.change(screen.getByPlaceholderText("E-post eller användarnamn"), {
     target: { value: "test@example.com" },
   });
   fireEvent.change(screen.getByPlaceholderText("Lösenord"), {

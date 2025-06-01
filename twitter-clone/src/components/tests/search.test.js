@@ -5,13 +5,23 @@ import { MemoryRouter } from 'react-router-dom';
 import HomeFeed from '../Home/Home';
 import { useUser } from '../../utils/UserContext';
 import * as searchController from '../../controllers/searchController';
+import { io } from "socket.io-client";
+
+jest.mock("socket.io-client", () => ({
+  __esModule: true,
+  io: () => ({
+    on: jest.fn(),
+    off: jest.fn(),
+    emit: jest.fn(),
+  }),
+}));
 
 jest.mock('../../utils/UserContext', () => ({
   useUser: jest.fn(),
 }));
 
 jest.mock('../../controllers/searchController.js', () => ({
-  searchPosts: jest.fn(),
+  searchPosts: jest.fn().mockResolvedValue([]),
 }));
 
 describe('search functionality in HomeFeed', () => {
@@ -44,6 +54,7 @@ describe('search functionality in HomeFeed', () => {
         content: 'Testar React',
         createdAt: new Date().toISOString(),
         author: { _id: '1', nickname: 'VT' },
+        comments: [],
       },
     ];
 
