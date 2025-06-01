@@ -34,4 +34,4 @@ jobs:
       - name: Run tests
         run: |
           cd twitter-clone
-          npm run test -- --run
+          npm run test
