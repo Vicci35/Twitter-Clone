@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import LoginStep1 from "./LoginStep1";
+import LoginStep1 from "../Login/LoginStep1";
 
 test("navigerar till /login/password när 'Nästa'-knappen klickas", async () => {
   const Step2 = () => (

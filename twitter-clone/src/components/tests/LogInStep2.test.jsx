@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import LogInStep2 from "./LogInStep2";
+import LogInStep2 from "../Login/LogInStep2";
 import React from "react";
 
 globalThis.fetch = jest.fn(() =>
