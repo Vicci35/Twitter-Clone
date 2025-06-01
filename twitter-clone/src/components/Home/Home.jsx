@@ -155,9 +155,15 @@ export default function HomeFeed() {
                     if (!comment || !comment.trim()) return;
 
                     try {
-                      const updatedPost = await createComment(post._id, comment, user._id);
+                      const updatedPost = await createComment(
+                        post._id,
+                        comment,
+                        user._id
+                      );
                       setPosts((prev) =>
-                        prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
+                        prev.map((p) =>
+                          p._id === updatedPost._id ? updatedPost : p
+                        )
                       );
                       setCommentInputs((prev) => ({ ...prev, [post._id]: "" }));
                     } catch (err) {
@@ -166,18 +172,33 @@ export default function HomeFeed() {
                   }}
                   style={{ marginTop: "8px" }}
                 >
-
                   <input
                     type="text"
                     placeholder="Write a comment..."
                     value={commentInputs[post._id] || ""}
                     onChange={(e) =>
-                      setCommentInputs((prev) => ({ ...prev, [post._id]: e.target.value }))
+                      setCommentInputs((prev) => ({
+                        ...prev,
+                        [post._id]: e.target.value,
+                      }))
                     }
                     style={{ width: "70%", marginRight: "8px" }}
                   />
-                  <button type="submit">Comment</button>
+                  <button type="submit" className="submit-comment">
+                    Comment
+                  </button>
                 </form>
+                {/* Show comments */}
+                <h4>Comments</h4>
+                {post.comments.length > 0
+                  ? post.comments.map((comment) => (
+                      <div className="comment" key={comment._id}>
+                        <h4>{comment.nickname}:</h4>
+                        <p className="comment-content">{comment.content}</p>
+                        {new Date(comment.createdAt).toLocaleString()}
+                      </div>
+                    ))
+                  : "No comments yet"}
               </div>
             ))}
           </div>
