@@ -35,3 +35,8 @@ jobs:
         run: |
           cd twitter-clone
           npm run test
+
+      - name: Run Playwright E2E tests
+        run: |
+          cd twitter-clone
+          npx playwright test
