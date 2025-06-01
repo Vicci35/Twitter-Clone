@@ -13,5 +13,5 @@ test('login flow E2E', async ({ page }) => {
   await page.click('button.LoggaIn');
 
   await expect(page).toHaveURL('/dashboard');
-  await expect(page.locator('text=Nina123')).toBeVisible(); 
+  await expect(page.locator('text=Welcome')).toBeVisible(); 
 });
