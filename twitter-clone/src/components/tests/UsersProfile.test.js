@@ -22,7 +22,7 @@ jest.mock('react-router-dom', () => {
 global.fetch = jest.fn();
 
 describe('UsersProfile', () => {
-  beforeEach(() => {
+  afterEach(() => {
     fetch.mockReset();
   });
 
@@ -37,6 +37,7 @@ describe('UsersProfile', () => {
 
   it('visar användarens namn och follow-knapp efter laddning', async () => {
     fetch.mockResolvedValueOnce({
+      ok:true, 
       json: () =>
         Promise.resolve({
           name: 'Anna',
@@ -48,11 +49,21 @@ describe('UsersProfile', () => {
           website: 'www.anna.se',
         }),
     }).mockResolvedValueOnce({
+      ok:true, 
       json: () =>
         Promise.resolve({
           following: [{ id: 'user789' }],
         }),
-    });
+    }).mockResolvedValueOnce({
+      ok:true, 
+    json: () => Promise.resolve({
+      followers: [],
+    }),
+  })
+  .mockResolvedValueOnce({
+    ok:true,
+    json: () => Promise.resolve([]), // tom lista med inlägg
+  });
 
     render(
       <MemoryRouter>
@@ -66,33 +77,44 @@ describe('UsersProfile', () => {
     });
   });
 
-  it('byter text på knapp till unfollow om användaren redan följs', async () => {
-    fetch.mockResolvedValueOnce({
+  it("byter text på knapp till unfollow om användaren redan följs", async () => {
+  fetch
+    .mockResolvedValueOnce({
       json: () =>
         Promise.resolve({
-          name: 'Anna',
-          nickname: 'anna123',
-          about: '',
-          hometown: '',
-          occupation: '',
-          email: '',
-          website: '',
+          name: "Anna",
+          nickname: "anna123",
+          about: "",
+          hometown: "",
+          occupation: "",
+          email: "",
+          website: "",
         }),
-    }).mockResolvedValueOnce({
+    })
+    .mockResolvedValueOnce({
       json: () =>
         Promise.resolve({
-          following: [{ id: 'user456' }],
+          following: [{ id: "user456" }],
         }),
+    })
+    .mockResolvedValueOnce({
+      json: () =>
+        Promise.resolve({
+          followers: [],
+        }),
+    })
+    .mockResolvedValueOnce({
+      json: () => Promise.resolve([]),
     });
 
-    render(
-      <MemoryRouter>
-        <UsersProfile />
-      </MemoryRouter>
-    );
+  render(
+    <MemoryRouter>
+      <UsersProfile />
+    </MemoryRouter>
+  );
 
-    await waitFor(() => {
-      expect(screen.getByText('Unfollow')).toBeInTheDocument();
-    });
+ await waitFor(() => {
+    expect(screen.getByText("Unfollow")).toBeInTheDocument();
   });
+});
 });
