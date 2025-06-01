@@ -9,6 +9,7 @@ on:
       - Oliver
       - Sebastian
       - main
+    
   pull_request:
     branches:
       - dev
@@ -17,8 +18,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      RUN_E2E: false
 
     steps:
       - uses: actions/checkout@v3
@@ -32,29 +31,8 @@ jobs:
           cd twitter-clone
           npm install
 
-      - name: Try installing Playwright dependencies
-        id: install_deps
-        continue-on-error: true
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-4-1 libgraphene-1.0-0 libvpx9 libevent-2.1-7 libopus0 gstreamer1.0-libav gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libsecret-1-0 libhyphen0 libgstreamer-gl1.0-0 libavif16 libharfbuzz-icu0
-          cd twitter-clone
-          npx playwright install
-
-      - name: Set RUN_E2E env var if dependencies installed
-        if: ${{ steps.install_deps.outcome == 'success' }}
-        run: echo "RUN_E2E=true" >> $GITHUB_ENV
-
-      - name: Start frontend server
-        if: env.RUN_E2E == 'true'
+      - name: Run tests
         run: |
           cd twitter-clone
-          npm run dev &
-          npx wait-on http://localhost:5173
-
-      - name: Run Playwright E2E tests
-        if: env.RUN_E2E == 'true'
-        run: |
-          cd twitter-clone
-          npx playwright test
+          npm run test
 
