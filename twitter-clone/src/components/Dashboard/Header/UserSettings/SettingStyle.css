@@ -1,0 +1,77 @@
+#settings-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#settings-content {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+#to-dash {
+  margin: 40px auto;
+  border: 1px solid;
+  border-radius: 12px;
+  background-color: white;
+  text-decoration: none;
+  color: black;
+  width: 200px;
+  padding: 5px;
+}
+
+#to-dash:hover {
+  background-color: lightgrey;
+}
+
+#update-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#update-info #save-button {
+  display: block;
+  margin: 20px auto;
+  border: 1px solid;
+  border-radius: 12px;
+  background-color: white;
+}
+
+#update-info input {
+  text-align: center;
+}
+
+#update-info #save-button:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.hide-updated-div {
+  display: none;
+}
+
+.user-updated {
+  position: absolute;
+  top: calc(50% - 150px);
+  height: 200px;
+  width: 300px;
+  font-size: 5em;
+  animation: fade 3s linear;
+}
+
+@keyframes fade {
+  0% {
+    background: rgba(255, 255, 255, 0.8);
+    color: green;
+    opacity: 1;
+  }
+  100% {
+    background: transparent;
+    color: transparent;
+    opacity: 0;
+  }
+}

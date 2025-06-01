@@ -1,0 +1,112 @@
+#user-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+#top-info-main {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.top-info {
+  display: flex;
+  flex-direction: column;
+}
+
+#profile-pic-mini {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+#top-info-left {
+  flex: 1;
+  padding-right: 4px;
+}
+
+#top-info-right {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: rgba(211, 211, 211, 0.1);
+}
+
+#top-info-right p {
+  margin: 5px auto;
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  margin-left: 70px;
+  color: black;
+}
+
+#user-activity {
+  display: flex;
+  width: 60%;
+  justify-content: space-evenly;
+  border-top: 1px solid;
+}
+
+#activity-left {
+  padding-top: 20px;
+  flex: 1;
+  padding-right: 10px;
+}
+
+#activity-left p {
+  color: black;
+  margin-top: 10px;
+}
+
+#activity-right {
+  flex: 2;
+  padding-top: 20px;
+  background-color: rgba(211, 211, 211, 0.1);
+  height: 300px;
+  overflow-y: scroll;
+}
+
+#activity-right::-webkit-scrollbar {
+  display: none;
+}
+
+.post-card-mini {
+  width: 150px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+#follow-button {
+  margin-top: 40px;
+  background-color: #1da1f2;
+  color: white;
+  font-size: 1em;
+}
+
+#follow-button:hover {
+  cursor: pointer;
+  font-weight: 900;
+}
+
+#close-btn {
+  margin-top: 40px;
+  border: 1px solid;
+  background-color: white;
+}
+
+#close-btn:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
