@@ -11,6 +11,8 @@ test('Registrera ny användare', async ({ page }) => {
   await page.fill('input[placeholder="Repetera lösenord"]', 'Superhemligt123!');
 
   await page.click('input#saveUser');
-  
+
+  await page.goto('http://localhost:5173/');
   await expect(page.locator('text=Logga in på Twitter')).toBeVisible();
+  
 });
