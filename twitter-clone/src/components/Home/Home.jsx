@@ -216,8 +216,8 @@ export default function HomeFeed() {
                 </form>
                 {/* Show comments */}
                 <h4>Comments</h4>
-                {post.comments.length > 0
-                  ? post.comments.map((comment) => (
+                {(post.comments || []).length > 0
+                  ? (post.comments || []).map((comment) => (
                       <div className="comment" key={comment._id}>
                         <h4>{comment.nickname}:</h4>
                         <p className="comment-content">{comment.content}</p>

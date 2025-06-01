@@ -4,6 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import HomeFeed from '../Home/Home';
 import { useUser } from '../../utils/UserContext';
 import * as postApi from '../../api/posts';
+import * as searchController from '../../controllers/searchController.js';
+
+jest.mock('../../controllers/searchController.js', () => ({
+  searchPosts: jest.fn(),
+}));
+
 
 jest.mock('../../utils/UserContext', () => ({
   useUser: jest.fn(),
@@ -19,6 +25,10 @@ describe('feed component', () => {
     useUser.mockReturnValue({ user: { _id: '1234', nickname: 'tester' } });
   });
 
+  afterEach(() => {
+  jest.clearAllMocks();
+  });
+
   test('hämtar och visar lista med poster', async () => {
     const mockPosts = [
       {
@@ -26,22 +36,30 @@ describe('feed component', () => {
         content: 'Första posten',
         createdAt: new Date().toISOString(),
         author: { _id: '1', nickname: 'VT' },
+        comments: [],
       },
       {
         _id: '2',
         content: 'Andra posten',
         createdAt: new Date().toISOString(),
         author: { _id: '2', nickname: 'Thaison' },
+        comments: [],
       },
     ];
 
-    postApi.fetchAllPosts.mockResolvedValue(mockPosts);
+    searchController.searchPosts.mockResolvedValue(mockPosts);
 
      render(
       <MemoryRouter>
         <HomeFeed />
       </MemoryRouter>
     );
+
+    const searchInput = screen.getByPlaceholderText("Sök hashtags eller personer");
+    await waitFor(() => {
+    searchInput.value = "något"; // fake searchWord
+    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+});
 
     await waitFor(() => {
       expect(screen.getByText(/Första posten/)).toBeInTheDocument();
@@ -50,7 +68,7 @@ describe('feed component', () => {
   });
 
    test('visar meddelande om inga poster finns', async () => {
-    postApi.fetchAllPosts.mockResolvedValue([]); 
+    searchController.searchPosts.mockResolvedValue([]);
 
     render(
       <MemoryRouter>
