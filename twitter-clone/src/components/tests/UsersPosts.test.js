@@ -27,6 +27,28 @@ describe("UserPosts", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    global.fetch = jest.fn(() => 
+      Promise.resolve({
+        json: () => Promise.resolve({ followers: []}),
+        ok: true,
+      })
+    );
+
+     Object.defineProperty(window, "localStorage", {
+      value: {
+        getItem: jest.fn(() => "mock-token"),
+        setItem: jest.fn(() => null),
+        removeItem: jest.fn(() => null),
+        clear: jest.fn(() => null),
+      },
+      writable: true,
+    });
+  });
+
+   afterEach(() => {
+    jest.resetAllMocks();
+    delete global.fetch; 
   });
 
   test("visar laddningsmeddelande medan data hämtas", async () => {
