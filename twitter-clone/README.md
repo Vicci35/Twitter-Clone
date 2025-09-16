@@ -1,12 +1,66 @@
-# React + Vite
+# Twitter Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Twitter-like social platform built as part of our Agile Frontend Development project.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User registration and login
+- Create posts (tweets)
+- Comment on posts
+- Follow and unfollow users
+- Normal feed & followed only feed
+- Search functionality for posts
+- View user profiles
+- Real-time updates using Socket.io
+- E2E test for log in and sign up
+- CI actions conected to Github
+- Testing with jest in frontend and vitest in backend
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Clone the repositorys
+- Backend: https://github.com/Vicci35/Twitter-Clone-Backend.git
+- Frontend: https://github.com/Vicci35/Twitter-Clone.git
+
+### Create a .env file in the backend and frontend
+
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+
+
+### Backend
+
+- open terminal
+- beware that you are in the projekt and do following commands:
+- npm install
+- npm start
+
+
+### Frontend
+
+- open terminal
+- beware that you are in the projekt and do following commands:
+- npm install
+- npm run dev
+
+### Run tests
+
+E2E-test
+- Start backend and frontend (Important)
+- open terminal
+- beware that you are in the projekt and do following commands:
+- npx playwright test
+
+Test with Jest
+- open terminal
+- beware that you are in the projekt and do following commands:
+- npm run test
+
+# Team
+- VT
+- Viccan
+- Sebastian
+- Oliver
+
+# Bugs
+- No current major bugs

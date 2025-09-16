@@ -109,7 +109,7 @@ function SignUp() {
           className="signupInput"
           type="email"
           id="email"
-          placeholder="bananpaj@zupahmail.com"
+          placeholder="E-post"
           onChange={handleInput}
         />
 
